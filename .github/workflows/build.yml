@@ -31,8 +31,6 @@ jobs:
       HUGO_VERSION: "latest"        # imposta la tua versione
       HUGO_ENVIRONMENT: "production"
       PROJECT_ID: ""              # ID progetto su S3 (config + content)
-      PROVISION_DOMAINS: "false"   # se true, attiva step di provisioning dominio + DNS
-      ZONE_ID: ""                   # ID zona DNS per record CNAME
       BASE_THEME: ""                # se usi un tema base comune a più template, specific
     steps:
       - name: Checkout Code
