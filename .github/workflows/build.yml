@@ -45,14 +45,14 @@ jobs:
             TEMPLATE="${{ github.event.inputs.template }}"
             HUGO_ENV="${{ github.event.inputs.environment }}"
             PROJECT_ID="${{ github.event.inputs.project_id }}"
-            CONFIG_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/config.json"
-            CONTENT_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/content.json"
+            CONFIG_URL="https://microsite.s3.cubbit.eu/${{ github.event.inputs.project_id }}/config.json"
+            CONTENT_URL="https://microsite.s3.cubbit.eu/${{ github.event.inputs.project_id }}/content.json"
           else
             TEMPLATE='${{ github.event.client_payload.template }}'
             HUGO_ENV='${{ github.event.client_payload.environment }}'
             PROJECT_ID='${{ github.event.client_payload.project_id }}'
-            CONFIG_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/config.json'
-            CONTENT_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/content.json'
+            CONFIG_URL='https://microsite.s3.cubbit.eu/${{ github.event.client_payload.project_id }}/config.json'
+            CONTENT_URL='https://microsite.s3.cubbit.eu/${{ github.event.client_payload.project_id }}/content.json'
           fi
 
           for name in TEMPLATE HUGO_ENV PROJECT_ID CONFIG_URL CONTENT_URL; do
