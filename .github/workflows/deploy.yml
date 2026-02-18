@@ -55,19 +55,17 @@ jobs:
             PROJECT_ID="${{ github.event.inputs.project_id }}"
             PROVISION_DOMAINS="${{ github.event.inputs.preview }}" # opzionale, default "false"
             ZONE_ID="${{ github.event.inputs.zone_id }}"
-            CONFIG_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/config.json"
-            CONTENT_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/content.json"
+            CONTENT_URL="https://microsite.s3.cubbit.eu/${{ github.event.inputs.project_id }}/content.json"
           else
             TEMPLATE='${{ github.event.client_payload.template }}'
             HUGO_ENV='${{ github.event.client_payload.environment }}'
             PROJECT_ID='${{ github.event.client_payload.project_id }}'
             PROVISION_DOMAINS='${{ github.event.client_payload.preview }}'
             ZONE_ID='${{ github.event.client_payload.zone_id }}'
-            CONFIG_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/config.json'
-            CONTENT_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/content.json'
+            CONTENT_URL='https://microsite.s3.cubbit.eu/${{ github.event.client_payload.project_id }}/content.json'
           fi
 
-          for name in TEMPLATE HUGO_ENV PROJECT_ID CONFIG_URL CONTENT_URL ZONE_ID; do
+          for name in TEMPLATE HUGO_ENV PROJECT_ID CONTENT_URL ZONE_ID; do
             val="${!name:-}"
             if [[ -z "$val" || "$val" == "null" ]]; then
               echo "Parametro mancante: $name"
@@ -78,7 +76,6 @@ jobs:
           echo "TEMPLATE=${TEMPLATE}" >> $GITHUB_ENV
           echo "HUGO_ENV=${HUGO_ENV}" >> $GITHUB_ENV
           echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
-          echo "CONFIG_URL=${CONFIG_URL}" >> $GITHUB_ENV
           echo "CONTENT_URL=${CONTENT_URL}" >> $GITHUB_ENV
           echo "ZONE_ID=${ZONE_ID}" >> $GITHUB_ENV
 
@@ -87,7 +84,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          ALLOWED=("simple")
+          ALLOWED=("under-construction-pro" "under-construction-elegant")
           VALID=0
           for t in "${ALLOWED[@]}"; do [[ "$t" == "${TEMPLATE}" ]] && VALID=1; done
           if [[ $VALID -ne 1 ]]; then
@@ -108,8 +105,7 @@ jobs:
           set -euo pipefail
           mkdir -p data/remote
 
-          curl -fsSL "${CONFIG_URL}" -o data/remote/config.src
-          curl -fsSL "${CONTENT_URL}" -o data/remote/content.src
+          curl -fsSL "${CONTENT_URL}" -o data/remote/content.json
 
           echo "Downloaded:"
           ls -lh data/remote
@@ -159,10 +155,8 @@ jobs:
             pathlib.Path(out_path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
           # 1) Normalizza config/content in JSON in data/remote/
-          cfg, cfg_fmt = load_any("data/remote/config.src")
-          content, cnt_fmt = load_any("data/remote/content.src")
+          content, cnt_fmt = load_any("data/remote/content.json")
 
-          dump_json(cfg, "data/remote/config.json")
           dump_json(content, "data/remote/content.json")
 
           # 2) Genera file markdown in content/ (se presenti)
@@ -229,7 +223,6 @@ jobs:
               encoding="utf-8"
             )
 
-          print(f"Normalized config/content ({cfg_fmt}, {cnt_fmt}) -> data/remote/*.json")
           print(f"Generated {len(pages)} markdown files under content/")
           PY
 
@@ -281,161 +274,161 @@ jobs:
       # Optional:
       #   PAGES_DEV_TARGET: defaults to "${PROJECT_ID}.pages.dev"
       # ------------------------------------------------------------
-      - name: Provision Pages Custom Domain (optional)
-        if: ${{ env.PROVISION_DOMAINS == 'true' }}
-        shell: bash
-        env:
-          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          PROJECT_ID: ${{ env.PROJECT_ID }}        # o usa un'altra env
-          ZONE_NAME: ${{ env.ZONE_NAME }}               # es: "cliente.it"
-          CUSTOM_DOMAIN: ${{ env.CUSTOM_DOMAIN }}       # es: "www.cliente.it"
-          PAGES_DEV_TARGET: ${{ env.PAGES_DEV_TARGET }} # opzionale
-        run: |
-          set -euo pipefail
+    #   - name: Provision Pages Custom Domain (optional)
+    #     if: ${{ env.PROVISION_DOMAINS == 'true' }}
+    #     shell: bash
+    #     env:
+    #       CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    #       CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    #       PROJECT_ID: ${{ env.PROJECT_ID }}        # o usa un'altra env
+    #       ZONE_NAME: ${{ env.ZONE_NAME }}               # es: "cliente.it"
+    #       CUSTOM_DOMAIN: ${{ env.CUSTOM_DOMAIN }}       # es: "www.cliente.it"
+    #       PAGES_DEV_TARGET: ${{ env.PAGES_DEV_TARGET }} # opzionale
+    #     run: |
+    #       set -euo pipefail
 
-          need() { if [[ -z "${!1:-}" || "${!1}" == "null" ]]; then echo "Missing env: $1"; exit 1; fi; }
-          need CF_API_TOKEN
-          need CF_ACCOUNT_ID
-          need PROJECT_ID
-          need ZONE_NAME
-          need CUSTOM_DOMAIN
+    #       need() { if [[ -z "${!1:-}" || "${!1}" == "null" ]]; then echo "Missing env: $1"; exit 1; fi; }
+    #       need CF_API_TOKEN
+    #       need CF_ACCOUNT_ID
+    #       need PROJECT_ID
+    #       need ZONE_NAME
+    #       need CUSTOM_DOMAIN
 
-          if [[ -z "${PAGES_DEV_TARGET:-}" || "${PAGES_DEV_TARGET}" == "null" ]]; then
-            PAGES_DEV_TARGET="${PROJECT_ID}.pages.dev"
-          fi
+    #       if [[ -z "${PAGES_DEV_TARGET:-}" || "${PAGES_DEV_TARGET}" == "null" ]]; then
+    #         PAGES_DEV_TARGET="${PROJECT_ID}.pages.dev"
+    #       fi
 
-          api() {
-            # usage: api METHOD URL [JSON]
-            local method="$1"; shift
-            local url="$1"; shift
-            local data="${1:-}"
-            if [[ -n "$data" ]]; then
-              curl -fsS -X "$method" "$url" \
-                -H "Authorization: Bearer ${CF_API_TOKEN}" \
-                -H "Content-Type: application/json" \
-                --data "$data"
-            else
-              curl -fsS -X "$method" "$url" \
-                -H "Authorization: Bearer ${CF_API_TOKEN}"
-            fi
-          }
+    #       api() {
+    #         # usage: api METHOD URL [JSON]
+    #         local method="$1"; shift
+    #         local url="$1"; shift
+    #         local data="${1:-}"
+    #         if [[ -n "$data" ]]; then
+    #           curl -fsS -X "$method" "$url" \
+    #             -H "Authorization: Bearer ${CF_API_TOKEN}" \
+    #             -H "Content-Type: application/json" \
+    #             --data "$data"
+    #         else
+    #           curl -fsS -X "$method" "$url" \
+    #             -H "Authorization: Bearer ${CF_API_TOKEN}"
+    #         fi
+    #       }
 
-          echo "==> Resolve Zone ID for ${ZONE_NAME}"
-          ZONE_ID=$(
-            api GET "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \
-            | jq -r '.result[0].id // empty'
-          )
-          if [[ -z "$ZONE_ID" ]]; then
-            echo "Zone not found or not accessible: ${ZONE_NAME}"
-            exit 1
-          fi
-          echo "ZONE_ID=${ZONE_ID}"
+    #       echo "==> Resolve Zone ID for ${ZONE_NAME}"
+    #       ZONE_ID=$(
+    #         api GET "https://api.cloudflare.com/client/v4/zones?name=${ZONE_NAME}" \
+    #         | jq -r '.result[0].id // empty'
+    #       )
+    #       if [[ -z "$ZONE_ID" ]]; then
+    #         echo "Zone not found or not accessible: ${ZONE_NAME}"
+    #         exit 1
+    #       fi
+    #       echo "ZONE_ID=${ZONE_ID}"
 
-          echo "==> Ensure Pages project has custom domain: ${CUSTOM_DOMAIN}"
-          HAS_DOMAIN=$(
-            api GET "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains" \
-            | jq -r --arg d "${CUSTOM_DOMAIN}" '[.result[]? | select(.name == $d)] | length'
-          )
+    #       echo "==> Ensure Pages project has custom domain: ${CUSTOM_DOMAIN}"
+    #       HAS_DOMAIN=$(
+    #         api GET "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains" \
+    #         | jq -r --arg d "${CUSTOM_DOMAIN}" '[.result[]? | select(.name == $d)] | length'
+    #       )
 
-          if [[ "$HAS_DOMAIN" == "0" ]]; then
-            api POST "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains" \
-              "{\"name\":\"${CUSTOM_DOMAIN}\"}" >/dev/null
-            echo "Added domain to Pages: ${CUSTOM_DOMAIN}"
-          else
-            echo "Domain already present on Pages: ${CUSTOM_DOMAIN}"
-          fi
+    #       if [[ "$HAS_DOMAIN" == "0" ]]; then
+    #         api POST "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains" \
+    #           "{\"name\":\"${CUSTOM_DOMAIN}\"}" >/dev/null
+    #         echo "Added domain to Pages: ${CUSTOM_DOMAIN}"
+    #       else
+    #         echo "Domain already present on Pages: ${CUSTOM_DOMAIN}"
+    #       fi
 
-          echo "==> Upsert CNAME: ${CUSTOM_DOMAIN} -> ${PAGES_DEV_TARGET}"
-          CNAME_JSON=$(api GET "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?type=CNAME&name=${CUSTOM_DOMAIN}")
-          CNAME_ID=$(echo "$CNAME_JSON" | jq -r '.result[0].id // empty')
-          CNAME_CONTENT=$(echo "$CNAME_JSON" | jq -r '.result[0].content // empty')
+    #       echo "==> Upsert CNAME: ${CUSTOM_DOMAIN} -> ${PAGES_DEV_TARGET}"
+    #       CNAME_JSON=$(api GET "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?type=CNAME&name=${CUSTOM_DOMAIN}")
+    #       CNAME_ID=$(echo "$CNAME_JSON" | jq -r '.result[0].id // empty')
+    #       CNAME_CONTENT=$(echo "$CNAME_JSON" | jq -r '.result[0].content // empty')
 
-          if [[ -z "$CNAME_ID" ]]; then
-            api POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" \
-              "{
-                \"type\":\"CNAME\",
-                \"name\":\"${CUSTOM_DOMAIN}\",
-                \"content\":\"${PAGES_DEV_TARGET}\",
-                \"ttl\":1,
-                \"proxied\":true
-              }" >/dev/null
-            echo "Created CNAME"
-          else
-            if [[ "$CNAME_CONTENT" != "$PAGES_DEV_TARGET" ]]; then
-              api PUT "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${CNAME_ID}" \
-                "{
-                  \"type\":\"CNAME\",
-                  \"name\":\"${CUSTOM_DOMAIN}\",
-                  \"content\":\"${PAGES_DEV_TARGET}\",
-                  \"ttl\":1,
-                  \"proxied\":true
-                }" >/dev/null
-              echo "Updated CNAME"
-            else
-              echo "CNAME already correct"
-            fi
-          fi
+    #       if [[ -z "$CNAME_ID" ]]; then
+    #         api POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" \
+    #           "{
+    #             \"type\":\"CNAME\",
+    #             \"name\":\"${CUSTOM_DOMAIN}\",
+    #             \"content\":\"${PAGES_DEV_TARGET}\",
+    #             \"ttl\":1,
+    #             \"proxied\":true
+    #           }" >/dev/null
+    #         echo "Created CNAME"
+    #       else
+    #         if [[ "$CNAME_CONTENT" != "$PAGES_DEV_TARGET" ]]; then
+    #           api PUT "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${CNAME_ID}" \
+    #             "{
+    #               \"type\":\"CNAME\",
+    #               \"name\":\"${CUSTOM_DOMAIN}\",
+    #               \"content\":\"${PAGES_DEV_TARGET}\",
+    #               \"ttl\":1,
+    #               \"proxied\":true
+    #             }" >/dev/null
+    #           echo "Updated CNAME"
+    #         else
+    #           echo "CNAME already correct"
+    #         fi
+    #       fi
 
-          echo "==> Fetch Pages domain status + validation data"
-          get_domain() {
-            api GET "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains/${CUSTOM_DOMAIN}"
-          }
+    #       echo "==> Fetch Pages domain status + validation data"
+    #       get_domain() {
+    #         api GET "https://api.cloudflare.com/client/v4/accounts/${CF_ACCOUNT_ID}/pages/projects/${PROJECT_ID}/domains/${CUSTOM_DOMAIN}"
+    #       }
 
-          DOM_JSON="$(get_domain)"
-          TXT_NAME=$(echo "$DOM_JSON" | jq -r '.result.validation_data.txt_name // empty')
-          TXT_VALUE=$(echo "$DOM_JSON" | jq -r '.result.validation_data.txt_value // empty')
+    #       DOM_JSON="$(get_domain)"
+    #       TXT_NAME=$(echo "$DOM_JSON" | jq -r '.result.validation_data.txt_name // empty')
+    #       TXT_VALUE=$(echo "$DOM_JSON" | jq -r '.result.validation_data.txt_value // empty')
 
-          if [[ -n "$TXT_NAME" && -n "$TXT_VALUE" ]]; then
-            echo "==> Upsert TXT validation: ${TXT_NAME}"
+    #       if [[ -n "$TXT_NAME" && -n "$TXT_VALUE" ]]; then
+    #         echo "==> Upsert TXT validation: ${TXT_NAME}"
 
-            TXT_JSON=$(api GET "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?type=TXT&name=${TXT_NAME}")
-            TXT_ID=$(echo "$TXT_JSON" | jq -r '.result[0].id // empty')
-            TXT_CONTENT=$(echo "$TXT_JSON" | jq -r '.result[0].content // empty')
+    #         TXT_JSON=$(api GET "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records?type=TXT&name=${TXT_NAME}")
+    #         TXT_ID=$(echo "$TXT_JSON" | jq -r '.result[0].id // empty')
+    #         TXT_CONTENT=$(echo "$TXT_JSON" | jq -r '.result[0].content // empty')
 
-            if [[ -z "$TXT_ID" ]]; then
-              api POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" \
-                "{
-                  \"type\":\"TXT\",
-                  \"name\":\"${TXT_NAME}\",
-                  \"content\":\"${TXT_VALUE}\",
-                  \"ttl\":1
-                }" >/dev/null
-              echo "Created TXT validation record"
-            else
-              if [[ "$TXT_CONTENT" != "$TXT_VALUE" ]]; then
-                api PUT "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${TXT_ID}" \
-                  "{
-                    \"type\":\"TXT\",
-                    \"name\":\"${TXT_NAME}\",
-                    \"content\":\"${TXT_VALUE}\",
-                    \"ttl\":1
-                  }" >/dev/null
-                echo "Updated TXT validation record"
-              else
-                echo "TXT validation already correct"
-              fi
-            fi
-          else
-            echo "No TXT validation required (or not provided by API)."
-          fi
+    #         if [[ -z "$TXT_ID" ]]; then
+    #           api POST "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records" \
+    #             "{
+    #               \"type\":\"TXT\",
+    #               \"name\":\"${TXT_NAME}\",
+    #               \"content\":\"${TXT_VALUE}\",
+    #               \"ttl\":1
+    #             }" >/dev/null
+    #           echo "Created TXT validation record"
+    #         else
+    #           if [[ "$TXT_CONTENT" != "$TXT_VALUE" ]]; then
+    #             api PUT "https://api.cloudflare.com/client/v4/zones/${ZONE_ID}/dns_records/${TXT_ID}" \
+    #               "{
+    #                 \"type\":\"TXT\",
+    #                 \"name\":\"${TXT_NAME}\",
+    #                 \"content\":\"${TXT_VALUE}\",
+    #                 \"ttl\":1
+    #               }" >/dev/null
+    #             echo "Updated TXT validation record"
+    #           else
+    #             echo "TXT validation already correct"
+    #           fi
+    #         fi
+    #       else
+    #         echo "No TXT validation required (or not provided by API)."
+    #       fi
 
-          echo "==> Wait for Pages domain to become active (max ~5 min)"
-          STATUS=""
-          for i in $(seq 1 30); do
-            DOM_JSON="$(get_domain)"
-            STATUS=$(echo "$DOM_JSON" | jq -r '.result.status // empty')
-            echo "Status: ${STATUS} (try ${i}/30)"
-            if [[ "$STATUS" == "active" ]]; then
-              echo "Domain is active."
-              exit 0
-            fi
-            sleep 10
-          done
+    #       echo "==> Wait for Pages domain to become active (max ~5 min)"
+    #       STATUS=""
+    #       for i in $(seq 1 30); do
+    #         DOM_JSON="$(get_domain)"
+    #         STATUS=$(echo "$DOM_JSON" | jq -r '.result.status // empty')
+    #         echo "Status: ${STATUS} (try ${i}/30)"
+    #         if [[ "$STATUS" == "active" ]]; then
+    #           echo "Domain is active."
+    #           exit 0
+    #         fi
+    #         sleep 10
+    #       done
 
-          echo "Domain did not become active in time. Last status: ${STATUS}"
-          echo "$DOM_JSON" | jq .
-          exit 1
+    #       echo "Domain did not become active in time. Last status: ${STATUS}"
+    #       echo "$DOM_JSON" | jq .
+    #       exit 1
 
     #   - name: Crea/Aggiorna Record DNS CNAME
     #     # Utilizziamo l'action dedicata ai record DNS
