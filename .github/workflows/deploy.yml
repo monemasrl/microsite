@@ -106,126 +106,126 @@ jobs:
           set -euo pipefail
           mkdir -p data/remote
 
-          curl -fsSL "${CONTENT_URL}" -o data/remote/content.json
+          curl -fsSL "${CONTENT_URL}" -o data/content.json
 
           echo "Downloaded:"
-          ls -lh data/remote
+          ls -lh data/
 
-      - name: Normalize config/content to JSON + generate Hugo content
-        shell: bash
-        run: |
-          set -euo pipefail
+    #   - name: Normalize config/content to JSON + generate Hugo content
+    #     shell: bash
+    #     run: |
+    #       set -euo pipefail
 
-          python3 - <<'PY'
-          import json, os, re, sys, pathlib
+    #       python3 - <<'PY'
+    #       import json, os, re, sys, pathlib
 
-          def detect_format(path: str) -> str:
-            # prova “naif” guardando il primo char non-spazio
-            s = pathlib.Path(path).read_text(encoding="utf-8", errors="strict").lstrip()
-            if not s:
-              return "unknown"
-            if s[0] in "{[":
-              return "json"
-            # YAML spesso inizia con '---' o con key:
-            if s.startswith("---") or re.match(r"^[A-Za-z0-9_-]+\s*:", s):
-              return "yaml"
-            return "unknown"
+    #       def detect_format(path: str) -> str:
+    #         # prova “naif” guardando il primo char non-spazio
+    #         s = pathlib.Path(path).read_text(encoding="utf-8", errors="strict").lstrip()
+    #         if not s:
+    #           return "unknown"
+    #         if s[0] in "{[":
+    #           return "json"
+    #         # YAML spesso inizia con '---' o con key:
+    #         if s.startswith("---") or re.match(r"^[A-Za-z0-9_-]+\s*:", s):
+    #           return "yaml"
+    #         return "unknown"
 
-          def load_json(path: str):
-            return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+    #       def load_json(path: str):
+    #         return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
 
-          def load_yaml(path: str):
-            # PyYAML non è garantito: installiamo al volo se serve
-            try:
-              import yaml  # type: ignore
-            except Exception:
-              import subprocess
-              subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "pyyaml"])
-              import yaml  # type: ignore
-            return yaml.safe_load(pathlib.Path(path).read_text(encoding="utf-8"))
+    #       def load_yaml(path: str):
+    #         # PyYAML non è garantito: installiamo al volo se serve
+    #         try:
+    #           import yaml  # type: ignore
+    #         except Exception:
+    #           import subprocess
+    #           subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "pyyaml"])
+    #           import yaml  # type: ignore
+    #         return yaml.safe_load(pathlib.Path(path).read_text(encoding="utf-8"))
 
-          def load_any(path: str):
-            fmt = detect_format(path)
-            if fmt == "json":
-              return load_json(path), "json"
-            if fmt == "yaml":
-              return load_yaml(path), "yaml"
-            raise SystemExit(f"Formato non riconosciuto per {path} (usa JSON o YAML)")
+    #       def load_any(path: str):
+    #         fmt = detect_format(path)
+    #         if fmt == "json":
+    #           return load_json(path), "json"
+    #         if fmt == "yaml":
+    #           return load_yaml(path), "yaml"
+    #         raise SystemExit(f"Formato non riconosciuto per {path} (usa JSON o YAML)")
 
-          def dump_json(obj, out_path: str):
-            pathlib.Path(out_path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    #       def dump_json(obj, out_path: str):
+    #         pathlib.Path(out_path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
-          # 1) Normalizza config/content in JSON in data/remote/
-          content, cnt_fmt = load_any("data/remote/content.json")
+    #       # 1) Normalizza config/content in JSON in data/remote/
+    #       content, cnt_fmt = load_any("data/remote/content.json")
 
-          dump_json(content, "data/remote/content.json")
+    #       dump_json(content, "data/remote/content.json")
 
-          # 2) Genera file markdown in content/ (se presenti)
-          pages = content.get("pages", [])
-          if not isinstance(pages, list):
-            raise SystemExit("content.pages deve essere un array")
+    #       # 2) Genera file markdown in content/ (se presenti)
+    #       pages = content.get("pages", [])
+    #       if not isinstance(pages, list):
+    #         raise SystemExit("content.pages deve essere un array")
 
-          def sanitize_path(p: str) -> str:
-            p = p.strip().lstrip("/").replace("\\", "/")
-            if ".." in p.split("/"):
-              raise SystemExit(f"Path non valido (..): {p}")
-            return p
+    #       def sanitize_path(p: str) -> str:
+    #         p = p.strip().lstrip("/").replace("\\", "/")
+    #         if ".." in p.split("/"):
+    #           raise SystemExit(f"Path non valido (..): {p}")
+    #         return p
 
-          def yaml_front_matter(meta: dict) -> str:
-            # front matter YAML minimale (senza dipendenze)
-            lines = ["---"]
-            for k, v in meta.items():
-              if isinstance(v, bool):
-                vv = "true" if v else "false"
-                lines.append(f"{k}: {vv}")
-              elif v is None:
-                continue
-              elif isinstance(v, (int, float)):
-                lines.append(f"{k}: {v}")
-              elif isinstance(v, dict):
-                lines.append(f"{k}:")
-                for kk, vv in v.items():
-                  # string only per semplicità
-                  lines.append(f"  {kk}: {json.dumps(str(vv), ensure_ascii=False)}")
-              else:
-                lines.append(f"{k}: {json.dumps(str(v), ensure_ascii=False)}")
-            lines.append("---")
-            return "\n".join(lines) + "\n"
+    #       def yaml_front_matter(meta: dict) -> str:
+    #         # front matter YAML minimale (senza dipendenze)
+    #         lines = ["---"]
+    #         for k, v in meta.items():
+    #           if isinstance(v, bool):
+    #             vv = "true" if v else "false"
+    #             lines.append(f"{k}: {vv}")
+    #           elif v is None:
+    #             continue
+    #           elif isinstance(v, (int, float)):
+    #             lines.append(f"{k}: {v}")
+    #           elif isinstance(v, dict):
+    #             lines.append(f"{k}:")
+    #             for kk, vv in v.items():
+    #               # string only per semplicità
+    #               lines.append(f"  {kk}: {json.dumps(str(vv), ensure_ascii=False)}")
+    #           else:
+    #             lines.append(f"{k}: {json.dumps(str(v), ensure_ascii=False)}")
+    #         lines.append("---")
+    #         return "\n".join(lines) + "\n"
 
-          out_root = pathlib.Path("content")
-          out_root.mkdir(parents=True, exist_ok=True)
+    #       out_root = pathlib.Path("content")
+    #       out_root.mkdir(parents=True, exist_ok=True)
 
-          for page in pages:
-            if not isinstance(page, dict):
-              raise SystemExit("Ogni elemento di pages deve essere un oggetto")
+    #       for page in pages:
+    #         if not isinstance(page, dict):
+    #           raise SystemExit("Ogni elemento di pages deve essere un oggetto")
 
-            path = sanitize_path(page.get("path", ""))
-            if not path.endswith(".md"):
-              raise SystemExit(f"path deve terminare con .md: {path}")
+    #         path = sanitize_path(page.get("path", ""))
+    #         if not path.endswith(".md"):
+    #           raise SystemExit(f"path deve terminare con .md: {path}")
 
-            title = page.get("title")
-            body = page.get("body", "")
-            date = page.get("date")
-            draft = page.get("draft", False)
-            params = page.get("params", {})
+    #         title = page.get("title")
+    #         body = page.get("body", "")
+    #         date = page.get("date")
+    #         draft = page.get("draft", False)
+    #         params = page.get("params", {})
 
-            meta = {}
-            if title: meta["title"] = title
-            if date: meta["date"] = date
-            meta["draft"] = bool(draft)
-            if isinstance(params, dict) and params:
-              meta["params"] = params
+    #         meta = {}
+    #         if title: meta["title"] = title
+    #         if date: meta["date"] = date
+    #         meta["draft"] = bool(draft)
+    #         if isinstance(params, dict) and params:
+    #           meta["params"] = params
 
-            out_path = out_root / path
-            out_path.parent.mkdir(parents=True, exist_ok=True)
+    #         out_path = out_root / path
+    #         out_path.parent.mkdir(parents=True, exist_ok=True)
 
-            out_path.write_text(
-              yaml_front_matter(meta) + str(body),
-              encoding="utf-8"
-            )
+    #         out_path.write_text(
+    #           yaml_front_matter(meta) + str(body),
+    #           encoding="utf-8"
+    #         )
 
-          print(f"Generated {len(pages)} markdown files under content/")
-          PY
+    #       print(f"Generated {len(pages)} markdown files under content/")
+    #       PY
 
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v3
