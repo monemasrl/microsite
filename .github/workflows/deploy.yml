@@ -33,7 +33,7 @@ concurrency:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    environment: "production"
+    environment: "Production"
     env:
       HUGO_VERSION: "latest"        # imposta la tua versione
       HUGO_ENVIRONMENT: "production"
