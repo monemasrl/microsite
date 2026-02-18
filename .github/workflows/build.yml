@@ -1,0 +1,243 @@
+name: "Fabbrica Landing Page"
+
+on:
+  workflow_dispatch:
+    inputs:
+      template:
+        description: "Nome template/theme Hugo (es: tpl-b2b, tpl-b2c, tpl-default)"
+        required: true
+        default: "tpl-default"
+      environment:
+        description: "Hugo environment"
+        required: true
+        default: "production"
+      project_id:
+        description: "ID del file config (json|yaml) su S3"
+        required: true
+
+
+  # Trigger da API con payload custom (repository_dispatch)
+  repository_dispatch:
+    types: [build-template]
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: "latest"        # imposta la tua versione
+      HUGO_ENVIRONMENT: "production"
+      PROJECT_ID: ""              # ID progetto su S3 (config + content)
+      PROVISION_DOMAINS: "false"   # se true, attiva step di provisioning dominio + DNS
+      ZONE_ID: ""                   # ID zona DNS per record CNAME
+      BASE_THEME: ""                # se usi un tema base comune a più template, specific
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Resolve and validate inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            TEMPLATE="${{ github.event.inputs.template }}"
+            HUGO_ENV="${{ github.event.inputs.environment }}"
+            PROJECT_ID="${{ github.event.inputs.project_id }}"
+            CONFIG_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/config.json"
+            CONTENT_URL="https://production.s3.cubbit.eu/landing/${{ github.event.inputs.project_id }}/content.json"
+          else
+            TEMPLATE='${{ github.event.client_payload.template }}'
+            HUGO_ENV='${{ github.event.client_payload.environment }}'
+            PROJECT_ID='${{ github.event.client_payload.project_id }}'
+            CONFIG_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/config.json'
+            CONTENT_URL='https://production.s3.cubbit.eu/landing/${{ github.event.client_payload.project_id }}/content.json'
+          fi
+
+          for name in TEMPLATE HUGO_ENV PROJECT_ID CONFIG_URL CONTENT_URL; do
+            val="${!name:-}"
+            if [[ -z "$val" || "$val" == "null" ]]; then
+              echo "Parametro mancante: $name"
+              exit 1
+            fi
+          done
+
+          echo "TEMPLATE=${TEMPLATE}" >> $GITHUB_ENV
+          echo "HUGO_ENV=${HUGO_ENV}" >> $GITHUB_ENV
+          echo "PROJECT_ID=${PROJECT_ID}" >> $GITHUB_ENV
+          echo "CONFIG_URL=${CONFIG_URL}" >> $GITHUB_ENV
+          echo "CONTENT_URL=${CONTENT_URL}" >> $GITHUB_ENV
+
+      - name: Validate template (whitelist + filesystem)
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ALLOWED=("simple")
+          VALID=0
+          for t in "${ALLOWED[@]}"; do [[ "$t" == "${TEMPLATE}" ]] && VALID=1; done
+          if [[ $VALID -ne 1 ]]; then
+            echo "Template non consentito: ${TEMPLATE}"
+            echo "Consentiti: ${ALLOWED[*]}"
+            exit 1
+          fi
+
+          [[ -d "themes/${TEMPLATE}" ]] || { echo "Tema non trovato: themes/${TEMPLATE}"; exit 1; }
+
+          if [[ -n "${BASE_THEME}" ]]; then
+            [[ -d "themes/${BASE_THEME}" ]] || { echo "BASE_THEME non trovato: themes/${BASE_THEME}"; exit 1; }
+          fi
+
+      - name: Download remote config + content (public S3)
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p data/remote
+
+          curl -fsSL "${CONFIG_URL}" -o data/remote/config.src
+          curl -fsSL "${CONTENT_URL}" -o data/remote/content.src
+
+          echo "Downloaded:"
+          ls -lh data/remote
+
+      - name: Normalize config/content to JSON + generate Hugo content
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY'
+          import json, os, re, sys, pathlib
+
+          def detect_format(path: str) -> str:
+            # prova “naif” guardando il primo char non-spazio
+            s = pathlib.Path(path).read_text(encoding="utf-8", errors="strict").lstrip()
+            if not s:
+              return "unknown"
+            if s[0] in "{[":
+              return "json"
+            # YAML spesso inizia con '---' o con key:
+            if s.startswith("---") or re.match(r"^[A-Za-z0-9_-]+\s*:", s):
+              return "yaml"
+            return "unknown"
+
+          def load_json(path: str):
+            return json.loads(pathlib.Path(path).read_text(encoding="utf-8"))
+
+          def load_yaml(path: str):
+            # PyYAML non è garantito: installiamo al volo se serve
+            try:
+              import yaml  # type: ignore
+            except Exception:
+              import subprocess
+              subprocess.check_call([sys.executable, "-m", "pip", "install", "--quiet", "pyyaml"])
+              import yaml  # type: ignore
+            return yaml.safe_load(pathlib.Path(path).read_text(encoding="utf-8"))
+
+          def load_any(path: str):
+            fmt = detect_format(path)
+            if fmt == "json":
+              return load_json(path), "json"
+            if fmt == "yaml":
+              return load_yaml(path), "yaml"
+            raise SystemExit(f"Formato non riconosciuto per {path} (usa JSON o YAML)")
+
+          def dump_json(obj, out_path: str):
+            pathlib.Path(out_path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+          # 1) Normalizza config/content in JSON in data/remote/
+          cfg, cfg_fmt = load_any("data/remote/config.src")
+          content, cnt_fmt = load_any("data/remote/content.src")
+
+          dump_json(cfg, "data/remote/config.json")
+          dump_json(content, "data/remote/content.json")
+
+          # 2) Genera file markdown in content/ (se presenti)
+          pages = content.get("pages", [])
+          if not isinstance(pages, list):
+            raise SystemExit("content.pages deve essere un array")
+
+          def sanitize_path(p: str) -> str:
+            p = p.strip().lstrip("/").replace("\\", "/")
+            if ".." in p.split("/"):
+              raise SystemExit(f"Path non valido (..): {p}")
+            return p
+
+          def yaml_front_matter(meta: dict) -> str:
+            # front matter YAML minimale (senza dipendenze)
+            lines = ["---"]
+            for k, v in meta.items():
+              if isinstance(v, bool):
+                vv = "true" if v else "false"
+                lines.append(f"{k}: {vv}")
+              elif v is None:
+                continue
+              elif isinstance(v, (int, float)):
+                lines.append(f"{k}: {v}")
+              elif isinstance(v, dict):
+                lines.append(f"{k}:")
+                for kk, vv in v.items():
+                  # string only per semplicità
+                  lines.append(f"  {kk}: {json.dumps(str(vv), ensure_ascii=False)}")
+              else:
+                lines.append(f"{k}: {json.dumps(str(v), ensure_ascii=False)}")
+            lines.append("---")
+            return "\n".join(lines) + "\n"
+
+          out_root = pathlib.Path("content")
+          out_root.mkdir(parents=True, exist_ok=True)
+
+          for page in pages:
+            if not isinstance(page, dict):
+              raise SystemExit("Ogni elemento di pages deve essere un oggetto")
+
+            path = sanitize_path(page.get("path", ""))
+            if not path.endswith(".md"):
+              raise SystemExit(f"path deve terminare con .md: {path}")
+
+            title = page.get("title")
+            body = page.get("body", "")
+            date = page.get("date")
+            draft = page.get("draft", False)
+            params = page.get("params", {})
+
+            meta = {}
+            if title: meta["title"] = title
+            if date: meta["date"] = date
+            meta["draft"] = bool(draft)
+            if isinstance(params, dict) and params:
+              meta["params"] = params
+
+            out_path = out_root / path
+            out_path.parent.mkdir(parents=True, exist_ok=True)
+
+            out_path.write_text(
+              yaml_front_matter(meta) + str(body),
+              encoding="utf-8"
+            )
+
+          print(f"Normalized config/content ({cfg_fmt}, {cnt_fmt}) -> data/remote/*.json")
+          print(f"Generated {len(pages)} markdown files under content/")
+          PY
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: ${{ env.HUGO_VERSION }}
+          extended: true
+
+      - name: Build Hugo
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -n "${BASE_THEME}" ]]; then
+            THEME_ARG="${TEMPLATE},${BASE_THEME}"
+          else
+            THEME_ARG="${TEMPLATE}"
+          fi
+
+          hugo --minify --environment "${HUGO_ENV}" --theme "${THEME_ARG}"
+
