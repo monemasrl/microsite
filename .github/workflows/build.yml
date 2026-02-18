@@ -216,7 +216,7 @@ jobs:
               encoding="utf-8"
             )
 
-          print(f"Normalized config/content ({cfg_fmt}, {cnt_fmt}) -> data/remote/*.json")
+          # print(f"Normalized config/content ({cfg_fmt}, {cnt_fmt}) -> data/remote/*.json")
           print(f"Generated {len(pages)} markdown files under content/")
           PY
 
