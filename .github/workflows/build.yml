@@ -146,10 +146,10 @@ jobs:
             pathlib.Path(out_path).write_text(json.dumps(obj, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
           # 1) Normalizza config/content in JSON in data/remote/
-          cfg, cfg_fmt = load_any("data/remote/config.src")
+          # cfg, cfg_fmt = load_any("data/remote/config.src")
           content, cnt_fmt = load_any("data/remote/content.src")
 
-          dump_json(cfg, "data/remote/config.json")
+          # dump_json(cfg, "data/remote/config.json")
           dump_json(content, "data/remote/content.json")
 
           # 2) Genera file markdown in content/ (se presenti)
