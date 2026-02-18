@@ -27,7 +27,7 @@ on:
     types: [build-template]
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages-${{ github.run_id }}
   cancel-in-progress: true
 
 jobs:
