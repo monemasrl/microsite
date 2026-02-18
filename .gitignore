@@ -52,3 +52,6 @@ yarn.lock
 .env
 .env.local
 .env.*.local
+
+NOTE.md
+.secrets
