@@ -1,4 +1,4 @@
-name: "Fabbrica Landing Page"
+name: "Build and Deploy Microsite"
 
 on:
   workflow_dispatch:
