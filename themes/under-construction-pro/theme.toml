@@ -1,0 +1,12 @@
+name = "Under Construction Pro"
+license = "MIT"
+licenselink = "https://github.com/yourusername/under-construction-pro/blob/main/LICENSE"
+description = "A professional dark-themed under construction page for Hugo with navigation, countdown timer and contact form"
+homepage = "https://github.com/yourusername/under-construction-pro"
+tags = ["under construction", "coming soon", "landing page", "professional", "dark theme", "countdown"]
+features = ["responsive", "dark theme", "navigation", "countdown timer", "contact form", "social media links"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"

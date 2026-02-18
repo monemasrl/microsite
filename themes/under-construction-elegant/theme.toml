@@ -1,0 +1,12 @@
+name = "Under Construction Elegant"
+license = "MIT"
+licenselink = "https://github.com/yourusername/under-construction-elegant/blob/main/LICENSE"
+description = "An elegant under construction page theme for Hugo with countdown timer and contact form"
+homepage = "https://github.com/yourusername/under-construction-elegant"
+tags = ["under construction", "coming soon", "landing page", "elegant", "countdown"]
+features = ["responsive", "countdown timer", "contact form", "social media links"]
+min_version = "0.112.0"
+
+[author]
+  name = "Monema S.r.l."
+  homepage = "https://monema.it"

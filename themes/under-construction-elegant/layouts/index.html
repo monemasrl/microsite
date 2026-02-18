@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "it" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Data.content.company.description | default "Sito in costruzione" }}">
+    <title>{{ .Site.Data.content.company.name | default .Site.Title }} - Coming Soon</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body>
+    <div class="container">
+        <!-- Logo and Company Name -->
+        <header class="header">
+            {{ if .Site.Data.content.company.logoUrl }}
+                <img src="{{ .Site.Data.content.company.logoUrl }}" alt="{{ .Site.Data.content.company.name }} Logo" class="logo">
+            {{ else }}
+                <img src="{{ "images/default-logo.svg" | relURL }}" alt="Logo" class="logo">
+            {{ end }}
+            <h1 class="company-name">{{ .Site.Data.content.company.name | default "La Tua Azienda" }}</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h2 class="headline">{{ .Site.Data.content.content.headline | default "Stiamo Arrivando Presto!" }}</h2>
+            
+            <!-- Description -->
+            {{ if .Site.Data.content.company.description }}
+            <p class="description">{{ .Site.Data.content.company.description }}</p>
+            {{ end }}
+
+            <!-- Countdown Timer -->
+            {{ if .Site.Data.content.launch.date }}
+            <div class="countdown-section">
+                <h3 class="countdown-title">{{ .Site.Data.content.launch.title | default "Lancio previsto per il" }}</h3>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="days">0</span>
+                        <span class="countdown-label">Giorni</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="hours">0</span>
+                        <span class="countdown-label">Ore</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="minutes">0</span>
+                        <span class="countdown-label">Minuti</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-value" id="seconds">0</span>
+                        <span class="countdown-label">Secondi</span>
+                    </div>
+                </div>
+            </div>
+            {{ end }}
+
+            <!-- Contact Form -->
+            <div class="contact-section">
+                <h3 class="section-title">{{ .Site.Data.content.form.title | default "Vuoi Saperne di Più?" }}</h3>
+                <p class="section-subtitle">{{ .Site.Data.content.form.subtitle | default "Lasciaci il tuo contatto e ti terremo aggiornato!" }}</p>
+                <form class="contact-form" id="contactForm" action="{{ .Site.Data.content.form.action | default "#" }}" method="POST">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="{{ .Site.Data.content.form.fields.name | default "Il tuo nome" }}" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="{{ .Site.Data.content.form.fields.email | default "La tua email" }}" required class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" placeholder="{{ .Site.Data.content.form.fields.message | default "Messaggio (opzionale)" }}" rows="4" class="form-input"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> {{ .Site.Data.content.form.submitButton | default "Invia Richiesta" }}
+                    </button>
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+
+            <!-- Contact Information -->
+            {{ if or .Site.Data.content.contact.email .Site.Data.content.contact.phone .Site.Data.content.contact.address }}
+            <div class="contact-info">
+                <h3 class="section-title">{{ .Site.Data.content.content.contactTitle | default "Contatti" }}</h3>
+                <div class="contact-details">
+                    {{ if .Site.Data.content.contact.email }}
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <a href="mailto:{{ .Site.Data.content.contact.email }}">{{ .Site.Data.content.contact.email }}</a>
+                    </div>
+                    {{ end }}
+                    {{ if .Site.Data.content.contact.phone }}
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <a href="tel:{{ .Site.Data.content.contact.phone }}">{{ .Site.Data.content.contact.phone }}</a>
+                    </div>
+                    {{ end }}
+                    {{ if .Site.Data.content.contact.address }}
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ .Site.Data.content.contact.address }}</span>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+            {{ end }}
+
+            <!-- Social Media Links -->
+            {{ if or .Site.Data.content.social.facebook .Site.Data.content.social.twitter .Site.Data.content.social.instagram .Site.Data.content.social.linkedin .Site.Data.content.social.youtube .Site.Data.content.social.github }}
+            <div class="social-links">
+                {{ with .Site.Data.content.social.facebook }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                {{ end }}
+                {{ with .Site.Data.content.social.twitter }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link twitter" aria-label="Twitter">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                {{ end }}
+                {{ with .Site.Data.content.social.instagram }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                {{ end }}
+                {{ with .Site.Data.content.social.linkedin }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link linkedin" aria-label="LinkedIn">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                {{ end }}
+                {{ with .Site.Data.content.social.youtube }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link youtube" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                {{ end }}
+                {{ with .Site.Data.content.social.github }}
+                <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-link github" aria-label="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+                {{ end }}
+            </div>
+            {{ end }}
+        </main>
+
+        <!-- Footer / Credits -->
+        <footer class="footer">
+            {{ if .Site.Data.content.credits }}
+            <p class="credits">{{ .Site.Data.content.credits | safeHTML }}</p>
+            {{ else }}
+            <p class="credits">&copy; {{ now.Year }} {{ .Site.Data.content.company.name | default .Site.Title }}. Tutti i diritti riservati.</p>
+            {{ end }}
+        </footer>
+    </div>
+
+    <!-- Background Animation -->
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Launch date from Hugo config
+        {{ if .Site.Data.content.launch.date }}
+        const launchDate = new Date("{{ .Site.Data.content.launch.date }}").getTime();
+        {{ else }}
+        const launchDate = new Date("2026-12-31T00:00:00").getTime();
+        {{ end }}
+    </script>
+    <script src="{{ "js/countdown.js" | relURL }}"></script>
+    <script src="{{ "js/form.js" | relURL }}"></script>
+</body>
+</html>

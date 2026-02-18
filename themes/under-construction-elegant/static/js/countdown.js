@@ -1,0 +1,38 @@
+// Countdown Timer
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = launchDate - now;
+
+    if (distance < 0) {
+        document.getElementById('countdown').innerHTML = `
+            <div class="countdown-item" style="min-width: 100%;">
+                <span class="countdown-value" style="font-size: 2rem;">🎉</span>
+                <span class="countdown-label">Siamo Live!</span>
+            </div>
+        `;
+        return;
+    }
+
+    // Calculate time units
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Update DOM
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    if (daysEl) daysEl.textContent = days;
+    if (hoursEl) hoursEl.textContent = hours.toString().padStart(2, '0');
+    if (minutesEl) minutesEl.textContent = minutes.toString().padStart(2, '0');
+    if (secondsEl) secondsEl.textContent = seconds.toString().padStart(2, '0');
+}
+
+// Initialize countdown
+if (typeof launchDate !== 'undefined') {
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+}

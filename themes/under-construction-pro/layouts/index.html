@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "it" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Data.content.company.description | default "Sito in costruzione" }}">
+    <title>{{ .Site.Data.content.company.name | default .Site.Title }} - Coming Soon</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                {{ if .Site.Data.content.company.logoUrl }}
+                    <img src="{{ .Site.Data.content.company.logoUrl }}" alt="{{ .Site.Data.content.company.name }}" class="logo-img">
+                {{ else }}
+                    <img src="{{ "images/default-logo.svg" | relURL }}" alt="Logo" class="logo-img">
+                {{ end }}
+                <span class="logo-text">{{ .Site.Data.content.company.name }}</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#countdown" class="nav-link">Countdown</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contatti</a></li>
+                </ul>
+            </div>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-content container">
+            <div class="hero-text">
+                <h1 class="hero-title">{{ .Site.Data.content.content.headline | default "Stiamo Arrivando Presto" }}</h1>
+                <p class="hero-description">{{ .Site.Data.content.company.description }}</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary">
+                        <i class="fas fa-envelope"></i> Resta Aggiornato
+                    </a>
+                    {{ if or .Site.Data.content.social.facebook .Site.Data.content.social.twitter .Site.Data.content.social.instagram .Site.Data.content.social.linkedin }}
+                    <div class="social-links-inline">
+                        {{ with .Site.Data.content.social.facebook }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.twitter }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.instagram }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.linkedin }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.youtube }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.github }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+        
+        <!-- Decorative Elements -->
+        <div class="hero-decoration">
+            <div class="decoration-circle circle-1"></div>
+            <div class="decoration-circle circle-2"></div>
+            <div class="decoration-circle circle-3"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Chi Siamo</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>{{ .Site.Data.content.company.name }}</h3>
+                    <p>{{ .Site.Data.content.company.description }}</p>
+                </div>
+                {{ if or .Site.Data.content.contact.email .Site.Data.content.contact.phone .Site.Data.content.contact.address }}
+                <div class="about-info">
+                    <div class="info-grid">
+                        {{ if .Site.Data.content.contact.email }}
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Email</h4>
+                                <a href="mailto:{{ .Site.Data.content.contact.email }}">{{ .Site.Data.content.contact.email }}</a>
+                            </div>
+                        </div>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.phone }}
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Telefono</h4>
+                                <a href="tel:{{ .Site.Data.content.contact.phone }}">{{ .Site.Data.content.contact.phone }}</a>
+                            </div>
+                        </div>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.address }}
+                        <div class="info-item">
+                            <div class="info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="info-text">
+                                <h4>Indirizzo</h4>
+                                <p>{{ .Site.Data.content.contact.address }}</p>
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    {{ if .Site.Data.content.launch.date }}
+    <section class="section countdown-section" id="countdown">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.launch.title | default "Lancio Previsto" }}</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="countdown-wrapper">
+                <div class="countdown-display" id="countdown">
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="days">0</div>
+                        <div class="countdown-label">Giorni</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="hours">00</div>
+                        <div class="countdown-label">Ore</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="minutes">00</div>
+                        <div class="countdown-label">Minuti</div>
+                    </div>
+                    <div class="countdown-separator">:</div>
+                    <div class="countdown-item">
+                        <div class="countdown-value" id="seconds">00</div>
+                        <div class="countdown-label">Secondi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.form.title | default "Contattaci" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.form.subtitle }}</p>
+                <div class="section-divider"></div>
+            </div>
+            <div class="contact-wrapper">
+                <form class="contact-form" id="contactForm" action="{{ .Site.Data.content.form.action | default "#" }}" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name" class="form-label">
+                                <i class="fas fa-user"></i> Nome
+                            </label>
+                            <input 
+                                type="text" 
+                                id="name"
+                                name="name" 
+                                placeholder="{{ .Site.Data.content.form.fields.name | default "Il tuo nome" }}" 
+                                required 
+                                class="form-input">
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i> Email
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email"
+                                name="email" 
+                                placeholder="{{ .Site.Data.content.form.fields.email | default "La tua email" }}" 
+                                required 
+                                class="form-input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">
+                            <i class="fas fa-comment"></i> Messaggio
+                        </label>
+                        <textarea 
+                            id="message"
+                            name="message" 
+                            placeholder="{{ .Site.Data.content.form.fields.message | default "Messaggio (opzionale)" }}" 
+                            rows="5" 
+                            class="form-input form-textarea"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i> 
+                        <span>{{ .Site.Data.content.form.submitButton | default "Invia Richiesta" }}</span>
+                    </button>
+                    <div class="form-message" id="formMessage"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                {{ if or .Site.Data.content.social.facebook .Site.Data.content.social.twitter .Site.Data.content.social.instagram .Site.Data.content.social.linkedin .Site.Data.content.social.youtube .Site.Data.content.social.github }}
+                <div class="footer-social">
+                    {{ with .Site.Data.content.social.facebook }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    {{ end }}
+                    {{ with .Site.Data.content.social.twitter }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Twitter">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    {{ end }}
+                    {{ with .Site.Data.content.social.instagram }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    {{ end }}
+                    {{ with .Site.Data.content.social.linkedin }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {{ end }}
+                    {{ with .Site.Data.content.social.youtube }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    {{ end }}
+                    {{ with .Site.Data.content.social.github }}
+                    <a href="{{ . }}" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {{ end }}
+                </div>
+                {{ end }}
+                <div class="footer-text">
+                    {{ if .Site.Data.content.credits }}
+                    <p>{{ .Site.Data.content.credits | safeHTML }}</p>
+                    {{ else }}
+                    <p>&copy; {{ now.Year }} {{ .Site.Data.content.company.name | default .Site.Title }}. Tutti i diritti riservati.</p>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Launch date from Hugo config
+        {{ if .Site.Data.content.launch.date }}
+        const launchDate = new Date("{{ .Site.Data.content.launch.date }}").getTime();
+        {{ else }}
+        const launchDate = new Date("2026-12-31T00:00:00").getTime();
+        {{ end }}
+        
+        // Form messages
+        const formMessages = {
+            success: "{{ .Site.Data.content.form.successMessage | default "Grazie! Ti contatteremo presto!" }}",
+            error: "{{ .Site.Data.content.form.errorMessage | default "Errore. Riprova più tardi." }}"
+        };
+    </script>
+    <script src="{{ "js/navigation.js" | relURL }}"></script>
+    <script src="{{ "js/countdown.js" | relURL }}"></script>
+    <script src="{{ "js/form.js" | relURL }}"></script>
+</body>
+</html>

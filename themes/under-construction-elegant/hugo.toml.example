@@ -1,0 +1,124 @@
+# Esempio di configurazione completa per Under Construction Elegant
+
+# NOTA: Questo è un file di esempio. 
+# Copia questi parametri in hugo.toml e personalizzali secondo le tue esigenze.
+
+baseURL = 'https://tuaazienda.com/'
+languageCode = 'it'
+title = 'Azienda Innovativa - Coming Soon'
+theme = 'under-construction-elegant'
+
+[params]
+  # ========================================
+  # INFORMAZIONI AZIENDA
+  # ========================================
+  
+  # Nome azienda che apparirà in evidenza
+  companyName = "Innovazione Digitale SRL"
+  
+  # Descrizione del progetto/sito/azienda
+  # Sarà mostrata sotto il titolo principale
+  description = "Stiamo creando una piattaforma rivoluzionaria che cambierà il modo di lavorare. Unisciti a noi in questo viaggio verso l'innovazione!"
+  
+  # ========================================
+  # LOGO
+  # ========================================
+  
+  # URL del logo aziendale
+  # Può essere un percorso relativo (/images/logo.png) o assoluto (https://...)
+  # Se lasciato vuoto, verrà mostrato un logo animato di default
+  logoUrl = "/images/company-logo.png"
+  # logoUrl = ""  # Decommentare per usare il logo di default
+  
+  # ========================================
+  # DATA DI LANCIO
+  # ========================================
+  
+  # Data e ora prevista per il lancio
+  # Formato: YYYY-MM-DDTHH:MM:SS
+  # Il countdown mostrerà i giorni, ore, minuti e secondi rimanenti
+  launchDate = "2026-09-15T09:00:00"
+  
+  # ========================================
+  # FORM DI CONTATTO
+  # ========================================
+  
+  # Endpoint dove inviare i dati del form
+  # Opzioni consigliate:
+  # - Formspree: "https://formspree.io/f/YOUR-FORM-ID"
+  # - Netlify Forms: lasciare "#" e aggiungere attributo netlify al form
+  # - Custom backend: "https://tuoserver.com/api/contact"
+  formAction = "https://formspree.io/f/myzypqrb"
+  
+  # ========================================
+  # CONTATTI AZIENDA
+  # ========================================
+  
+  # Email aziendale (mostrata nella sezione contatti)
+  email = "info@innovazionedigitale.it"
+  
+  # Telefono aziendale con prefisso internazionale
+  phone = "+39 02 1234 5678"
+  
+  # Indirizzo fisico dell'azienda
+  address = "Via dell'Innovazione 42, 20100 Milano, Italia"
+  
+  # ========================================
+  # CREDITS / FOOTER
+  # ========================================
+  
+  # Testo dei credits (supporta HTML)
+  # Verrà mostrato nel footer della pagina
+  credits = "&copy; 2026 Innovazione Digitale SRL. Tutti i diritti riservati. | P.IVA 12345678901 | Design by <a href='https://yourportfolio.com'>Your Name</a>"
+
+# ==========================================
+# LINK AI SOCIAL MEDIA
+# ==========================================
+# Inserisci solo i social che vuoi mostrare.
+# Lascia vuote le stringhe ("") per i social che non vuoi includere.
+# I link vuoti non verranno mostrati sulla pagina.
+
+[params.social]
+  facebook = "https://facebook.com/innovazionedigitale"
+  twitter = "https://twitter.com/innov_digitale"
+  instagram = "https://instagram.com/innovazionedigitale"
+  linkedin = "https://linkedin.com/company/innovazione-digitale"
+  youtube = "https://youtube.com/c/innovazionedigitale"
+  github = "https://github.com/innovazionedigitale"
+
+# ==========================================
+# ESEMPIO CON SOLO ALCUNI SOCIAL
+# ==========================================
+# Decommentare questa sezione per mostrare solo alcuni social
+
+# [params.social]
+#   facebook = ""
+#   twitter = "https://twitter.com/tuoaccount"
+#   instagram = "https://instagram.com/tuoaccount"
+#   linkedin = "https://linkedin.com/company/tuaazienda"
+#   youtube = ""
+#   github = ""
+
+# ==========================================
+# ESEMPIO MINIMALISTA
+# ==========================================
+# Configurazione minima richiesta (decommentare per usare)
+
+# baseURL = 'https://example.org/'
+# languageCode = 'it'
+# title = 'My Site'
+# theme = 'under-construction-elegant'
+# 
+# [params]
+#   companyName = "La Mia Azienda"
+#   description = "Stiamo arrivando presto!"
+#   launchDate = "2026-12-31T00:00:00"
+#   email = "info@example.com"
+# 
+# [params.social]
+#   facebook = ""
+#   twitter = ""
+#   instagram = ""
+#   linkedin = ""
+#   youtube = ""
+#   github = ""
