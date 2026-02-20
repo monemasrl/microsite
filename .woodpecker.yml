@@ -28,12 +28,12 @@ steps:
     commands:
       - /usr/local/bin/build.sh
 
-  # - name: deploy
-  #   image: node:20-alpine
-  #   environment:
-  #     CLOUDFLARE_ACCOUNT_ID:
-  #       from_secret: CLOUDFLARE_ACCOUNT_ID
-  #     CLOUDFLARE_API_TOKEN:
-  #       from_secret: CLOUDFLARE_API_TOKEN
-  #   commands:
-  #     - npx --yes wrangler@latest pages deploy dist --project-name "$CF_PAGES_PROJECT"
+  - name: deploy
+    image: node:20-alpine
+    environment:
+      CLOUDFLARE_ACCOUNT_ID:
+        from_secret: CLOUDFLARE_ACCOUNT_ID
+      CLOUDFLARE_API_TOKEN:
+        from_secret: CLOUDFLARE_API_TOKEN
+    commands:
+      - npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
