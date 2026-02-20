@@ -24,7 +24,7 @@ steps:
       SITE_ID: ${SITE_ID}
       EXTRA_BASE_URL: ${EXTRA_BASE_URL}
       THEME: ${THEME}
-      OUTPUT_DIR: ${CI_WORKSPACE}/dist
+      OUTPUT_DIR: dist
     commands:
       - /usr/local/bin/build.sh
 
