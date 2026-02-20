@@ -41,3 +41,5 @@ steps:
       CI_COMMIT_MESSAGE: ${CI_COMMIT_MESSAGE}
     commands:
       - echo "Deploying to Cloudflare Pages..."
+      - echo "Site ID: $(echo $SITE_ID)"
+      # - npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
