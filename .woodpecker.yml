@@ -34,6 +34,5 @@ steps:
       - |
           echo "Account ID: $CLOUDFLARE_ACCOUNT_ID"
           echo "API Token: ${CLOUDFLARE_API_TOKEN:0:4}...${CLOUDFLARE_API_TOKEN: -4}"
-          npx --yes wrangler@latest whoami
-          npx --yes wrangler@latest pages project list
+          ls -la
           npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID"
