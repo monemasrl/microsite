@@ -6,15 +6,15 @@ steps:
     image: curlimages/curl:8.6.0
     commands:
       - set -euo pipefail
-      - mkdir -p .ci/data
+      - mkdir -p data
       # FILE_URLS: lista separata da spazio o newline (passata via API)
       - |
         echo "Downloading files..."
         for url in $FILE_URLS; do
           echo " - $url"
-          curl -fsSL "$url" -o ".ci/data/$(basename "$url")"
+          curl -fsSL "$url" -o "data/$(basename "$url")"
         done
-      - ls -lah .ci/data
+      - ls -lah data
 
   - name: build
     # usa la tua immagine builder (es. hugo, node, ecc.)
