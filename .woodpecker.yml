@@ -32,7 +32,5 @@ steps:
     image: node:20-alpine
     commands:
       - |
-          echo "Account ID: $CLOUDFLARE_ACCOUNT_ID"
-          echo "API Token: ${CLOUDFLARE_API_TOKEN:0:4}...${CLOUDFLARE_API_TOKEN: -4}"
-          find .
+          echo "Deploying to Cloudflare Pages..."
           npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID"
