@@ -36,9 +36,8 @@ steps:
       CLOUDFLARE_API_TOKEN:
         from_secret: CLOUDFLARE_API_TOKEN
     commands:
-      - echo "Environment variables:"
-      - echo "  SITE_ID: $SITE_ID"
-      - echo "  CI_BRANCH: $CI_BRANCH"
-      - echo "  CI_COMMIT_SHA: $CI_COMMIT_SHA"
-      - echo "  CI_COMMIT_MESSAGE: $CI_COMMIT_MESSAGE"
+      - echo "  SITE_ID: ${SITE_ID}"
+      - echo "  CI_BRANCH: ${CI_BRANCH}"
+      - echo "  CI_COMMIT_SHA: ${CI_COMMIT_SHA}"
+      - echo "  CI_COMMIT_MESSAGE: ${CI_COMMIT_MESSAGE}"
       # - npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
