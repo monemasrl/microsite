@@ -35,11 +35,5 @@ steps:
         from_secret: CLOUDFLARE_ACCOUNT_ID
       CLOUDFLARE_API_TOKEN:
         from_secret: CLOUDFLARE_API_TOKEN
-      SITE_ID: ${SITE_ID}
-      CI_BRANCH: ${CI_BRANCH}
-      CI_COMMIT_SHA: ${CI_COMMIT_SHA}
-      CI_COMMIT_MESSAGE: ${CI_COMMIT_MESSAGE}
     commands:
-      - | 
-          echo "Deploying to Cloudflare Pages..."
-          echo "Site ID: ${SITE_ID}"
+      - npx --yes wrangler@latest pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
