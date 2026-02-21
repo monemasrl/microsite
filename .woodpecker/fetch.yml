@@ -2,7 +2,7 @@ when:
   - event: manual
 
 steps:
-  - name: fetch-data
+  - name: fetch
     image: curlimages/curl:8.6.0
     commands:
       - set -euo pipefail

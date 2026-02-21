@@ -15,5 +15,5 @@ steps:
       - /usr/local/bin/build.sh
 
 depends_on:
-  - fetch-data
+  - fetch
 
