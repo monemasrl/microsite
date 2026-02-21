@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "it" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta name="keywords" content="{{ .Site.Data.content.seo.keywords | default .Site.Params.keywords }}">
+    <meta name="author" content="{{ .Site.Data.content.company.name | default .Site.Params.author }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Site.Data.content.seo.ogTitle | default .Site.Title }}">
+    <meta property="og:description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Site.BaseURL }}">
+    {{ with .Site.Data.content.seo.ogImage }}
+    <meta property="og:image" content="{{ . }}">
+    {{ end }}
+    
+    <title>{{ .Site.Data.content.seo.title | default .Site.Title }}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+    <!-- Microdata Schema.org for LocalBusiness -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "{{ .Site.Data.content.company.name }}",
+        "description": "{{ .Site.Data.content.company.description }}",
+        {{ with .Site.Data.content.company.logoUrl }}
+        "image": "{{ . }}",
+        {{ end }}
+        {{ with .Site.Data.content.contact.phone }}
+        "telephone": "{{ . }}",
+        {{ end }}
+        {{ with .Site.Data.content.contact.email }}
+        "email": "{{ . }}",
+        {{ end }}
+        {{ with .Site.Data.content.contact.address }}
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ .street }}",
+            "addressLocality": "{{ .city }}",
+            "postalCode": "{{ .zip }}",
+            "addressCountry": "{{ .country | default "IT" }}"
+        },
+        {{ end }}
+        {{ if .Site.Data.content.company.openingHours }}
+        "openingHours": {{ .Site.Data.content.company.openingHours | jsonify }},
+        {{ end }}
+        "priceRange": "{{ .Site.Data.content.company.priceRange | default "$$" }}",
+        "url": "{{ .Site.BaseURL }}"
+    }
+    </script>
+</head>
+<body>
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <i class="fas fa-cookie-bite"></i>
+                <p>{{ .Site.Data.content.cookies.bannerText | default "Questo sito utilizza cookie tecnici e di terze parti per migliorare la tua esperienza. Continuando la navigazione accetti l'uso dei cookie." }}</p>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn btn-secondary btn-sm" id="cookieSettings">
+                    <i class="fas fa-cog"></i> Impostazioni
+                </button>
+                <button class="btn btn-primary btn-sm" id="cookieAccept">
+                    <i class="fas fa-check"></i> Accetta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                {{ if .Site.Data.content.company.logoUrl }}
+                    <img src="{{ .Site.Data.content.company.logoUrl }}" alt="{{ .Site.Data.content.company.name }}" class="logo-img">
+                {{ else }}
+                    <img src="{{ "images/default-logo.svg" | relURL }}" alt="Logo" class="logo-img">
+                {{ end }}
+                <span class="logo-text">{{ .Site.Data.content.company.name }}</span>
+            </div>
+            
+            <div class="nav-contact">
+                {{ if .Site.Data.content.contact.phone }}
+                <a href="tel:{{ .Site.Data.content.contact.phone }}" class="nav-phone">
+                    <i class="fas fa-phone"></i>
+                    <span>{{ .Site.Data.content.contact.phone }}</span>
+                </a>
+                {{ end }}
+            </div>
+
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#home" class="nav-link active">Home</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">Chi Siamo</a></li>
+                    <li class="nav-item"><a href="#services" class="nav-link">Servizi</a></li>
+                    <li class="nav-item"><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contatti</a></li>
+                </ul>
+            </div>
+            
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Image Gallery -->
+    <section class="hero-section" id="home">
+        <div class="hero-gallery">
+            {{ range $index, $image := .Site.Data.content.gallery.images }}
+            <div class="gallery-slide {{ if eq $index 0 }}active{{ end }}" style="background-image: url('{{ .url }}')">
+                <div class="gallery-overlay"></div>
+            </div>
+            {{ end }}
+        </div>
+        
+        <div class="hero-content container">
+            <div class="hero-text">
+                <h1 class="hero-title">{{ .Site.Data.content.hero.title | default "Servizi Professionali di Manutenzione" }}</h1>
+                <p class="hero-subtitle">{{ .Site.Data.content.hero.subtitle | default "Esperienza, qualità e affidabilità al tuo servizio" }}</p>
+                <div class="hero-cta">
+                    <a href="#contact" class="btn btn-primary btn-lg">
+                        <i class="fas fa-phone"></i> Contattaci Ora
+                    </a>
+                    <a href="#services" class="btn btn-outline btn-lg">
+                        <i class="fas fa-info-circle"></i> I Nostri Servizi
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery Controls -->
+        <div class="gallery-controls">
+            <button class="gallery-control gallery-prev" id="galleryPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="gallery-control gallery-next" id="galleryNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+
+        <div class="gallery-indicators" id="galleryIndicators">
+            {{ range $index, $image := .Site.Data.content.gallery.images }}
+            <button class="gallery-indicator {{ if eq $index 0 }}active{{ end }}" data-slide="{{ $index }}"></button>
+            {{ end }}
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about-section" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.about.title | default "Chi Siamo" }}</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">{{ .Site.Data.content.about.subtitle }}</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    {{ range .Site.Data.content.about.paragraphs }}
+                    <p>{{ . }}</p>
+                    {{ end }}
+                </div>
+                {{ if .Site.Data.content.about.highlights }}
+                <div class="about-highlights">
+                    {{ range .Site.Data.content.about.highlights }}
+                    <div class="highlight-item">
+                        <div class="highlight-icon">
+                            <i class="fas fa-{{ .icon }}"></i>
+                        </div>
+                        <div class="highlight-content">
+                            <h3>{{ .title }}</h3>
+                            <p>{{ .description }}</p>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section services-section" id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.services.title | default "I Nostri Servizi" }}</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">{{ .Site.Data.content.services.subtitle }}</p>
+            </div>
+            <div class="services-grid">
+                {{ range .Site.Data.content.services.items }}
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-{{ .icon }}"></i>
+                    </div>
+                    <h3 class="service-title">{{ .title }}</h3>
+                    <p class="service-description">{{ .description }}</p>
+                    {{ if .features }}
+                    <ul class="service-features">
+                        {{ range .features }}
+                        <li><i class="fas fa-check"></i> {{ . }}</li>
+                        {{ end }}
+                    </ul>
+                    {{ end }}
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+        <div class="container">
+            <div class="cta-card">
+                <div class="cta-icon">
+                    <i class="fas fa-{{ .Site.Data.content.cta.icon | default "phone-volume" }}"></i>
+                </div>
+                <div class="cta-content">
+                    <h2 class="cta-title">{{ .Site.Data.content.cta.title | default "Hai Bisogno di Assistenza?" }}</h2>
+                    <p class="cta-description">{{ .Site.Data.content.cta.description | default "Il nostro team è sempre disponibile per rispondere alle tue domande e fornirti un preventivo gratuito." }}</p>
+                </div>
+                <div class="cta-action">
+                    <a href="#contact" class="btn btn-primary btn-lg">
+                        <i class="fas fa-envelope"></i> {{ .Site.Data.content.cta.buttonText | default "Richiedi Preventivo" }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.contact.formTitle | default "Contattaci" }}</h2>
+                <div class="section-divider"></div>
+                <p class="section-subtitle">{{ .Site.Data.content.contact.formSubtitle | default "Compila il form e ti ricontatteremo al più presto" }}</p>
+            </div>
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h3>Informazioni di Contatto</h3>
+                    <div class="contact-details">
+                        {{ if .Site.Data.content.contact.phone }}
+                        <div class="contact-detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Telefono</h4>
+                                <a href="tel:{{ .Site.Data.content.contact.phone }}">{{ .Site.Data.content.contact.phone }}</a>
+                            </div>
+                        </div>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.email }}
+                        <div class="contact-detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Email</h4>
+                                <a href="mailto:{{ .Site.Data.content.contact.email }}">{{ .Site.Data.content.contact.email }}</a>
+                            </div>
+                        </div>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.address }}
+                        <div class="contact-detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Indirizzo</h4>
+                                <p>{{ .Site.Data.content.contact.address.street }}<br>
+                                {{ .Site.Data.content.contact.address.zip }} {{ .Site.Data.content.contact.address.city }}</p>
+                            </div>
+                        </div>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.hours }}
+                        <div class="contact-detail-item">
+                            <div class="detail-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="detail-text">
+                                <h4>Orari</h4>
+                                {{ range .Site.Data.content.contact.hours }}
+                                <p>{{ . }}</p>
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                <div class="contact-form-wrapper">
+                    <form class="contact-form" id="contactForm" action="{{ .Site.Data.content.contact.formAction | default "#" }}" method="POST">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name" class="form-label">
+                                    <i class="fas fa-user"></i> Nome e Cognome *
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="name"
+                                    name="name" 
+                                    placeholder="Mario Rossi" 
+                                    required 
+                                    class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope"></i> Email *
+                                </label>
+                                <input 
+                                    type="email" 
+                                    id="email"
+                                    name="email" 
+                                    placeholder="mario.rossi@email.com" 
+                                    required 
+                                    class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    <i class="fas fa-phone"></i> Telefono
+                                </label>
+                                <input 
+                                    type="tel" 
+                                    id="phone"
+                                    name="phone" 
+                                    placeholder="+39 123 456 7890" 
+                                    class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label for="subject" class="form-label">
+                                    <i class="fas fa-tag"></i> Oggetto
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="subject"
+                                    name="subject" 
+                                    placeholder="Richiesta informazioni" 
+                                    class="form-input">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">
+                                <i class="fas fa-comment"></i> Messaggio *
+                            </label>
+                            <textarea 
+                                id="message"
+                                name="message" 
+                                placeholder="Scrivi qui il tuo messaggio..." 
+                                rows="6" 
+                                required
+                                class="form-input form-textarea"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-checkbox">
+                                <input type="checkbox" name="privacy" required>
+                                <span>Accetto la <a href="#" class="privacy-link" data-modal="privacy">Privacy Policy</a> e autorizzo il trattamento dei miei dati personali *</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-submit">
+                            <i class="fas fa-paper-plane"></i> 
+                            <span>Invia Messaggio</span>
+                        </button>
+                        <div class="form-message" id="formMessage"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section footer-about">
+                    <div class="footer-logo">
+                        {{ if .Site.Data.content.company.logoUrl }}
+                            <img src="{{ .Site.Data.content.company.logoUrl }}" alt="{{ .Site.Data.content.company.name }}" class="footer-logo-img">
+                        {{ end }}
+                        <h3>{{ .Site.Data.content.company.name }}</h3>
+                    </div>
+                    <p>{{ .Site.Data.content.footer.description | default .Site.Data.content.company.description }}</p>
+                </div>
+                
+                <div class="footer-section footer-links">
+                    <h4>Link Utili</h4>
+                    <ul>
+                        <li><a href="#about">Chi Siamo</a></li>
+                        <li><a href="#services">Servizi</a></li>
+                        <li><a href="#contact">Contatti</a></li>
+                        {{ range .Site.Data.content.footer.links }}
+                        <li><a href="{{ .url }}">{{ .text }}</a></li>
+                        {{ end }}
+                    </ul>
+                </div>
+
+                <div class="footer-section footer-contact">
+                    <h4>Contatti</h4>
+                    <ul>
+                        {{ if .Site.Data.content.contact.phone }}
+                        <li><i class="fas fa-phone"></i> <a href="tel:{{ .Site.Data.content.contact.phone }}">{{ .Site.Data.content.contact.phone }}</a></li>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.email }}
+                        <li><i class="fas fa-envelope"></i> <a href="mailto:{{ .Site.Data.content.contact.email }}">{{ .Site.Data.content.contact.email }}</a></li>
+                        {{ end }}
+                        {{ if .Site.Data.content.contact.address }}
+                        <li><i class="fas fa-map-marker-alt"></i> {{ .Site.Data.content.contact.address.street }}, {{ .Site.Data.content.contact.address.city }}</li>
+                        {{ end }}
+                    </ul>
+                </div>
+
+                {{ if or .Site.Data.content.social.facebook .Site.Data.content.social.twitter .Site.Data.content.social.instagram .Site.Data.content.social.linkedin }}
+                <div class="footer-section footer-social">
+                    <h4>Seguici</h4>
+                    <div class="social-links">
+                        {{ with .Site.Data.content.social.facebook }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.twitter }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.instagram }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.linkedin }}
+                        <a href="{{ . }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <p>&copy; {{ now.Year }} {{ .Site.Data.content.company.name }}. Tutti i diritti riservati.</p>
+                    {{ if .Site.Data.content.company.vatNumber }}
+                    <p>P.IVA: {{ .Site.Data.content.company.vatNumber }}</p>
+                    {{ end }}
+                </div>
+                <div class="footer-policies">
+                    <a href="#" class="policy-link" data-modal="privacy">Privacy Policy</a>
+                    <span>|</span>
+                    <a href="#" class="policy-link" data-modal="cookie">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Privacy Policy Modal -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Privacy Policy</h2>
+                <button class="modal-close" data-close="privacy">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="policy-content">
+                    {{ range .Site.Data.content.privacy.sections }}
+                    <section class="policy-section">
+                        <h3>{{ .title }}</h3>
+                        {{ range .paragraphs }}
+                        <p>{{ . }}</p>
+                        {{ end }}
+                    </section>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Policy Modal -->
+    <div class="modal" id="cookieModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h2>Cookie Policy</h2>
+                <button class="modal-close" data-close="cookie">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-content">
+                <div class="policy-content">
+                    {{ range .Site.Data.content.cookies.sections }}
+                    <section class="policy-section">
+                        <h3>{{ .title }}</h3>
+                        {{ range .paragraphs }}
+                        <p>{{ . }}</p>
+                        {{ end }}
+                        {{ if .table }}
+                        <table class="cookie-table">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Tipo</th>
+                                    <th>Durata</th>
+                                    <th>Scopo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{ range .table }}
+                                <tr>
+                                    <td>{{ .name }}</td>
+                                    <td>{{ .type }}</td>
+                                    <td>{{ .duration }}</td>
+                                    <td>{{ .purpose }}</td>
+                                </tr>
+                                {{ end }}
+                            </tbody>
+                        </table>
+                        {{ end }}
+                    </section>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="{{ "js/navigation.js" | relURL }}"></script>
+    <script src="{{ "js/gallery.js" | relURL }}"></script>
+    <script src="{{ "js/cookie.js" | relURL }}"></script>
+    <script src="{{ "js/form.js" | relURL }}"></script>
+</body>
+</html>

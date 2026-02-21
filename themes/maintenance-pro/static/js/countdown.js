@@ -9,7 +9,7 @@ function updateCountdown() {
     const distance = estimatedEnd - now;
 
     const countdownEl = document.getElementById('countdown');
-    
+
     if (!countdownEl) return;
 
     if (distance < 0) {
@@ -41,7 +41,7 @@ function updateCountdown() {
 }
 
 // Initialize countdown
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     if (typeof estimatedEnd !== 'undefined' && estimatedEnd !== null) {
         updateCountdown();
         setInterval(updateCountdown, 1000);

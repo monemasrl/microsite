@@ -1,0 +1,12 @@
+name = "Simple Pro"
+license = "MIT"
+licenselink = "https://github.com/yourusername/simple-pro/blob/main/LICENSE"
+description = "A professional single-page business website theme for Hugo with dark design and full GDPR compliance"
+homepage = "https://github.com/yourusername/simple-pro"
+tags = ["business", "single-page", "professional", "dark theme", "GDPR", "contact form"]
+features = ["responsive", "dark theme", "cookie banner", "privacy policy", "contact form", "microdata", "sticky header", "image gallery"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"

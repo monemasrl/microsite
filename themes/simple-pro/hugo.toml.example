@@ -1,0 +1,20 @@
+baseURL = "https://your-site.com/"
+languageCode = "it"
+title = "Servizi Manutenzione Professionale"
+theme = "simple-pro"
+
+# Enable robots.txt generation
+enableRobotsTXT = true
+
+# Disable unnecessary features for a single-page site
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Servizi professionali di manutenzione per aziende e privati"
+  author = "La Tua Azienda"
+  keywords = ["manutenzione", "servizi", "professionali", "riparazioni"]
+
+[privacy]
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true
