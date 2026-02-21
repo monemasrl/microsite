@@ -1,0 +1,12 @@
+name = "Maintenance Pro"
+license = "MIT"
+licenselink = "https://github.com/yourusername/maintenance-pro/blob/main/LICENSE"
+description = "A professional dark-themed maintenance page for Hugo with status information and estimated recovery time"
+homepage = "https://github.com/yourusername/maintenance-pro"
+tags = ["maintenance", "down", "landing page", "professional", "dark theme", "status page"]
+features = ["responsive", "dark theme", "status information", "countdown timer", "contact info", "social media links"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"

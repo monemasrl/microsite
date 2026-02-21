@@ -1,0 +1,11 @@
+baseURL = "https://your-site.com/"
+languageCode = "it"
+title = "Manutenzione in Corso"
+theme = "maintenance-pro"
+
+# Disable unnecessary features for a maintenance page
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
+
+[params]
+  description = "Il sito è temporaneamente offline per manutenzione"
+  author = "La Tua Azienda"
