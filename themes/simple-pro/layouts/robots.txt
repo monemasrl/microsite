@@ -1,4 +1,4 @@
-{{- $buildMode := getenv "BUILD_MODE" | default "production" -}}
+{{- $buildMode := getenv "HUGO_BUILD_MODE" | default "production" -}}
 User-agent: *
 {{- if ne $buildMode "production" }}
 Disallow: /
