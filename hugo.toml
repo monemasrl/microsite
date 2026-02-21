@@ -1,5 +1,2 @@
-baseURL = 'https://monema.it/'
 languageCode = 'it'
-title = 'Monema S.r.l.'
-theme = 'simple-pro'
 enableRobotsTXT = true
