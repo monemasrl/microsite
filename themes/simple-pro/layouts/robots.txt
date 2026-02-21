@@ -1,0 +1,9 @@
+{{- $buildMode := getenv "BUILD_MODE" | default "production" -}}
+User-agent: *
+{{- if ne $buildMode "production" }}
+Disallow: /
+{{- else }}
+Allow: /
+{{- end }}
+
+Sitemap: {{ "sitemap.xml" | absURL }}
