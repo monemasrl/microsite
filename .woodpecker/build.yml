@@ -1,0 +1,16 @@
+steps:
+  - name: build
+    # usa la tua immagine builder (es. hugo, node, ecc.)
+    image: monema/woodpecker-hugo-builder:0.1.0
+    environment:
+      BUILD_ID: ${CI_PIPELINE_NUMBER}
+      SITE_ID: ${SITE_ID}
+      EXTRA_BASE_URL: ${EXTRA_BASE_URL}
+      THEME: ${THEME}
+      OUTPUT_DIR: dist
+    commands:
+      - /usr/local/bin/build.sh
+
+depends_on:
+  - fetch-data
+

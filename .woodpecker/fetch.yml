@@ -1,0 +1,18 @@
+when:
+  - event: manual
+
+steps:
+  - name: fetch-data
+    image: curlimages/curl:8.6.0
+    commands:
+      - set -euo pipefail
+      - mkdir -p data
+      # FILE_URLS: lista separata da spazio o newline (passata via API)
+      - |
+        echo "Downloading files..."
+        for url in $FILE_URLS; do
+          echo " - $url"
+          curl -fsSL "$url" -o "data/$(basename "$url")"
+        done
+      - ls -lah data
+
