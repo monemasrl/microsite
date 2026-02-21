@@ -21,9 +21,6 @@ steps:
     image: monema/woodpecker-hugo-builder:0.1.0
     environment:
       BUILD_ID: ${CI_PIPELINE_NUMBER}
-      SITE_ID: ${SITE_ID}
-      EXTRA_BASE_URL: ${EXTRA_BASE_URL}
-      THEME: ${THEME}
       OUTPUT_DIR: dist
     commands:
       - /usr/local/bin/build.sh
@@ -39,4 +36,4 @@ steps:
       - |
           set -euo pipefail
           echo "Deploying to Cloudflare Pages..."
-          wrangler pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
+          wrangler pages deploy dist --project-name "$PROJECT_NAME" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
