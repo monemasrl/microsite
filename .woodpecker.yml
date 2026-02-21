@@ -1,0 +1,42 @@
+when:
+  - event: manual
+
+steps:
+  - name: fetch-data
+    image: curlimages/curl:8.6.0
+    commands:
+      - set -euo pipefail
+      - mkdir -p data
+      # FILE_URLS: lista separata da spazio o newline (passata via API)
+      - |
+        echo "Downloading files..."
+        for url in $FILE_URLS; do
+          echo " - $url"
+          curl -fsSL "$url" -o "data/$(basename "$url")"
+        done
+      - ls -lah data
+
+  - name: build
+    # usa la tua immagine builder (es. hugo, node, ecc.)
+    image: monema/woodpecker-hugo-builder:0.1.0
+    environment:
+      BUILD_ID: ${CI_PIPELINE_NUMBER}
+      SITE_ID: ${SITE_ID}
+      EXTRA_BASE_URL: ${EXTRA_BASE_URL}
+      THEME: ${THEME}
+      OUTPUT_DIR: dist
+    commands:
+      - /usr/local/bin/build.sh
+
+  - name: deploy
+    image: monema/wrangler:4.67.0
+    environment:
+      CLOUDFLARE_ACCOUNT_ID:
+        from_secret: CLOUDFLARE_ACCOUNT_ID
+      CLOUDFLARE_API_TOKEN:
+        from_secret: CLOUDFLARE_API_TOKEN
+    commands:
+      - |
+          set -euo pipefail
+          echo "Deploying to Cloudflare Pages..."
+          wrangler pages deploy dist --project-name "$SITE_ID" --branch "$CI_BRANCH" --commit-hash "$CI_COMMIT_SHA" --commit-message "$CI_COMMIT_MESSAGE"
