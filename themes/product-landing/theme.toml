@@ -1,0 +1,12 @@
+name = "Product Landing"
+license = "MIT"
+licenselink = "https://github.com/yourusername/product-landing/blob/main/LICENSE"
+description = "A modern and conversion-optimized landing page theme for product launches and SaaS platforms"
+homepage = "https://github.com/yourusername/product-landing"
+tags = ["product", "landing-page", "saas", "conversion", "modern", "gradient", "testimonials"]
+features = ["responsive", "gradient design", "pricing tables", "testimonials", "FAQ", "CTA sections", "feature showcase", "smooth animations"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"

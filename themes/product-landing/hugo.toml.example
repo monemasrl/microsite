@@ -1,0 +1,20 @@
+baseURL = "https://your-product.com/"
+languageCode = "it"
+title = "ProductName - Il Tuo Prodotto Innovativo"
+theme = "product-landing"
+
+# Enable robots.txt generation
+enableRobotsTXT = true
+
+# Disable unnecessary features for a single-page site
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "Descrizione del tuo prodotto innovativo che risolve un problema specifico"
+  author = "Your Company"
+  keywords = ["saas", "prodotto", "software", "soluzione"]
+
+[privacy]
+  [privacy.youtube]
+    disable = false
+    privacyEnhanced = true

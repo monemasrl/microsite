@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "it" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta name="keywords" content="{{ .Site.Data.content.seo.keywords | default .Site.Params.keywords }}">
+    <meta name="author" content="{{ .Site.Data.content.product.company | default .Site.Params.author }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Site.Data.content.seo.ogTitle | default .Site.Title }}">
+    <meta property="og:description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Site.BaseURL }}">
+    {{ with .Site.Data.content.seo.ogImage }}
+    <meta property="og:image" content="{{ . }}">
+    {{ end }}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Site.Data.content.seo.ogTitle | default .Site.Title }}">
+    <meta name="twitter:description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    {{ with .Site.Data.content.seo.ogImage }}
+    <meta name="twitter:image" content="{{ . }}">
+    {{ end }}
+    
+    <title>{{ .Site.Data.content.seo.title | default .Site.Title }}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+    <!-- Microdata Schema.org for SoftwareApplication -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "{{ .Site.Data.content.product.name }}",
+        "description": "{{ .Site.Data.content.product.description }}",
+        "applicationCategory": "{{ .Site.Data.content.product.category | default "BusinessApplication" }}",
+        "operatingSystem": "{{ .Site.Data.content.product.operatingSystem | default "Web, iOS, Android" }}",
+        "offers": {
+            "@type": "AggregateOffer",
+            "offeredBy": {
+                "@type": "Organization",
+                "name": "{{ .Site.Data.content.product.company }}"
+            }
+        }
+    }
+    </script>
+</head>
+<body>
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <i class="fas fa-cookie-bite"></i>
+                <p>{{ .Site.Data.content.cookies.bannerText | default "Utilizziamo cookie per migliorare la tua esperienza. Continuando la navigazione accetti l'uso dei cookie." }}</p>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn-text" id="cookieSettings">Impostazioni</button>
+                <button class="btn btn-primary btn-sm" id="cookieAccept">Accetta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                <span class="logo-icon">{{ .Site.Data.content.product.logoIcon | default "🚀" }}</span>
+                <span class="logo-text">{{ .Site.Data.content.product.name }}</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#features" class="nav-link">Funzionalità</a></li>
+                    <li class="nav-item"><a href="#pricing" class="nav-link">Prezzi</a></li>
+                    <li class="nav-item"><a href="#faq" class="nav-link">FAQ</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                {{ if .Site.Data.content.cta.loginUrl }}
+                <a href="{{ .Site.Data.content.cta.loginUrl }}" class="btn-text">Accedi</a>
+                {{ end }}
+                <a href="#pricing" class="btn btn-primary btn-sm">Inizia Gratis</a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-background">
+            <div class="gradient-orb orb-1"></div>
+            <div class="gradient-orb orb-2"></div>
+            <div class="gradient-orb orb-3"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    {{ if .Site.Data.content.hero.badge }}
+                    <div class="hero-badge">
+                        <i class="fas fa-{{ .Site.Data.content.hero.badge.icon }}"></i>
+                        <span>{{ .Site.Data.content.hero.badge.text }}</span>
+                    </div>
+                    {{ end }}
+                    <h1 class="hero-title">{{ .Site.Data.content.hero.title }}</h1>
+                    <p class="hero-subtitle">{{ .Site.Data.content.hero.subtitle }}</p>
+                    <div class="hero-cta">
+                        <a href="#pricing" class="btn btn-primary btn-lg">
+                            <i class="fas fa-rocket"></i> {{ .Site.Data.content.hero.ctaPrimary | default "Inizia Gratis" }}
+                        </a>
+                        {{ if .Site.Data.content.hero.ctaSecondary }}
+                        <a href="{{ .Site.Data.content.hero.ctaSecondaryUrl | default "#features" }}" class="btn btn-outline btn-lg">
+                            <i class="fas fa-play-circle"></i> {{ .Site.Data.content.hero.ctaSecondary }}
+                        </a>
+                        {{ end }}
+                    </div>
+                    {{ if .Site.Data.content.hero.features }}
+                    <div class="hero-features">
+                        {{ range .Site.Data.content.hero.features }}
+                        <div class="hero-feature">
+                            <i class="fas fa-check-circle"></i>
+                            <span>{{ . }}</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+                {{ if .Site.Data.content.hero.image }}
+                <div class="hero-image">
+                    <img src="{{ .Site.Data.content.hero.image }}" alt="{{ .Site.Data.content.product.name }}" class="hero-img">
+                    <div class="hero-image-glow"></div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    {{ if .Site.Data.content.stats }}
+    <section class="stats-section">
+        <div class="container">
+            <div class="stats-grid">
+                {{ range .Site.Data.content.stats }}
+                <div class="stat-item">
+                    <div class="stat-value">{{ .value }}</div>
+                    <div class="stat-label">{{ .label }}</div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Features Section -->
+    <section class="section features-section" id="features">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.features.title | default "Funzionalità Potenti" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.features.subtitle }}</p>
+            </div>
+            <div class="features-grid">
+                {{ range .Site.Data.content.features.items }}
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-{{ .icon }}"></i>
+                    </div>
+                    <h3 class="feature-title">{{ .title }}</h3>
+                    <p class="feature-description">{{ .description }}</p>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    {{ if .Site.Data.content.benefits }}
+    <section class="section benefits-section">
+        <div class="container">
+            <div class="benefits-wrapper">
+                {{ range $index, $benefit := .Site.Data.content.benefits }}
+                <div class="benefit-row {{ if modBool $index 2 }}reverse{{ end }}">
+                    <div class="benefit-content">
+                        <h2 class="benefit-title">{{ .title }}</h2>
+                        <p class="benefit-description">{{ .description }}</p>
+                        {{ if .features }}
+                        <ul class="benefit-features">
+                            {{ range .features }}
+                            <li><i class="fas fa-check"></i> {{ . }}</li>
+                            {{ end }}
+                        </ul>
+                        {{ end }}
+                    </div>
+                    <div class="benefit-image">
+                        <img src="{{ .image }}" alt="{{ .title }}">
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- How It Works Section -->
+    {{ if .Site.Data.content.howItWorks }}
+    <section class="section how-it-works-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.howItWorks.title | default "Come Funziona" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.howItWorks.subtitle }}</p>
+            </div>
+            <div class="steps-grid">
+                {{ range $index, $step := .Site.Data.content.howItWorks.steps }}
+                <div class="step-card">
+                    <div class="step-number">{{ add $index 1 }}</div>
+                    <div class="step-icon">
+                        <i class="fas fa-{{ .icon }}"></i>
+                    </div>
+                    <h3 class="step-title">{{ .title }}</h3>
+                    <p class="step-description">{{ .description }}</p>
+                </div>
+                {{ if ne $index (sub (len $.Site.Data.content.howItWorks.steps) 1) }}
+                <div class="step-connector">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Pricing Section -->
+    <section class="section pricing-section" id="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.pricing.title | default "Piani e Prezzi" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.pricing.subtitle }}</p>
+            </div>
+            {{ if .Site.Data.content.pricing.toggle }}
+            <div class="pricing-toggle">
+                <span class="toggle-label {{ if not .Site.Data.content.pricing.defaultYearly }}active{{ end }}">Mensile</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="pricingToggle" {{ if .Site.Data.content.pricing.defaultYearly }}checked{{ end }}>
+                    <span class="toggle-slider"></span>
+                </label>
+                <span class="toggle-label {{ if .Site.Data.content.pricing.defaultYearly }}active{{ end }}">
+                    Annuale
+                    {{ if .Site.Data.content.pricing.yearlyDiscount }}
+                    <span class="discount-badge">{{ .Site.Data.content.pricing.yearlyDiscount }}</span>
+                    {{ end }}
+                </span>
+            </div>
+            {{ end }}
+            <div class="pricing-grid">
+                {{ range .Site.Data.content.pricing.plans }}
+                <div class="pricing-card {{ if .featured }}featured{{ end }}">
+                    {{ if .featured }}
+                    <div class="pricing-badge">{{ .featuredText | default "Più Popolare" }}</div>
+                    {{ end }}
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class="fas fa-{{ .icon }}"></i>
+                        </div>
+                        <h3 class="pricing-name">{{ .name }}</h3>
+                        <p class="pricing-description">{{ .description }}</p>
+                    </div>
+                    <div class="pricing-price">
+                        {{ if .priceMonthly }}
+                        <div class="price-wrapper">
+                            <span class="price-amount monthly-price">{{ .priceMonthly }}</span>
+                            {{ if .priceYearly }}
+                            <span class="price-amount yearly-price" style="display: none;">{{ .priceYearly }}</span>
+                            {{ end }}
+                            <span class="price-currency">€</span>
+                            <span class="price-period monthly-period">/mese</span>
+                            {{ if .priceYearly }}
+                            <span class="price-period yearly-period" style="display: none;">/anno</span>
+                            {{ end }}
+                        </div>
+                        {{ else }}
+                        <div class="price-custom">{{ .priceCustom }}</div>
+                        {{ end }}
+                    </div>
+                    <ul class="pricing-features">
+                        {{ range .features }}
+                        <li>
+                            <i class="fas fa-{{ if .included }}check{{ else }}times{{ end }}"></i>
+                            <span {{ if not .included }}class="feature-disabled"{{ end }}>{{ .text }}</span>
+                        </li>
+                        {{ end }}
+                    </ul>
+                    <a href="{{ .ctaUrl | default "#contact" }}" class="btn {{ if .featured }}btn-primary{{ else }}btn-outline{{ end }} btn-block">
+                        {{ .ctaText | default "Inizia Ora" }}
+                    </a>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    {{ if .Site.Data.content.testimonials }}
+    <section class="section testimonials-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.testimonials.title | default "Cosa Dicono i Nostri Clienti" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.testimonials.subtitle }}</p>
+            </div>
+            <div class="testimonials-grid">
+                {{ range .Site.Data.content.testimonials.items }}
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        {{ range seq .rating }}
+                        <i class="fas fa-star"></i>
+                        {{ end }}
+                    </div>
+                    <p class="testimonial-text">"{{ .text }}"</p>
+                    <div class="testimonial-author">
+                        {{ if .avatar }}
+                        <img src="{{ .avatar }}" alt="{{ .name }}" class="author-avatar">
+                        {{ else }}
+                        <div class="author-avatar-placeholder">{{ substr .name 0 1 }}</div>
+                        {{ end }}
+                        <div class="author-info">
+                            <div class="author-name">{{ .name }}</div>
+                            <div class="author-role">{{ .role }}</div>
+                        </div>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- FAQ Section -->
+    {{ if .Site.Data.content.faq }}
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">{{ .Site.Data.content.faq.title | default "Domande Frequenti" }}</h2>
+                <p class="section-subtitle">{{ .Site.Data.content.faq.subtitle }}</p>
+            </div>
+            <div class="faq-wrapper">
+                {{ range $index, $item := .Site.Data.content.faq.items }}
+                <div class="faq-item">
+                    <button class="faq-question" data-faq="{{ $index }}">
+                        <span>{{ .question }}</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="faq-answer">
+                        <p>{{ .answer }}</p>
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </section>
+    {{ end }}
+
+    <!-- Final CTA Section -->
+    <section class="section final-cta-section">
+        <div class="container">
+            <div class="final-cta-card">
+                <h2 class="final-cta-title">{{ .Site.Data.content.finalCta.title | default "Pronto a Iniziare?" }}</h2>
+                <p class="final-cta-subtitle">{{ .Site.Data.content.finalCta.subtitle }}</p>
+                <div class="final-cta-actions">
+                    <a href="#pricing" class="btn btn-primary btn-lg">
+                        <i class="fas fa-rocket"></i> {{ .Site.Data.content.finalCta.ctaText | default "Inizia Gratis" }}
+                    </a>
+                    {{ if .Site.Data.content.finalCta.note }}
+                    <p class="cta-note">{{ .Site.Data.content.finalCta.note }}</p>
+                    {{ end }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span class="logo-icon">{{ .Site.Data.content.product.logoIcon | default "🚀" }}</span>
+                        <span class="logo-text">{{ .Site.Data.content.product.name }}</span>
+                    </div>
+                    <p class="footer-description">{{ .Site.Data.content.product.description }}</p>
+                    {{ if .Site.Data.content.social }}
+                    <div class="footer-social">
+                        {{ with .Site.Data.content.social.twitter }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.facebook }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.instagram }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.linkedin }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        {{ end }}
+                        {{ with .Site.Data.content.social.github }}
+                        <a href="{{ . }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+                
+                {{ if .Site.Data.content.footer.links }}
+                {{ range .Site.Data.content.footer.links }}
+                <div class="footer-links">
+                    <h4 class="footer-title">{{ .title }}</h4>
+                    <ul class="footer-list">
+                        {{ range .items }}
+                        <li><a href="{{ .url }}">{{ .text }}</a></li>
+                        {{ end }}
+                    </ul>
+                </div>
+                {{ end }}
+                {{ end }}
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; {{ now.Year }} {{ .Site.Data.content.product.company }}. Tutti i diritti riservati.</p>
+                <div class="footer-legal">
+                    <a href="/privacy">Privacy Policy</a>
+                    <span>•</span>
+                    <a href="/cookie">Cookie Policy</a>
+                    <span>•</span>
+                    <a href="/terms">Termini di Servizio</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="{{ "js/scripts.js" | relURL }}"></script>
+</body>
+</html>
