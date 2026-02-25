@@ -1,0 +1,584 @@
+{
+    "seo": {
+        "title": "Pizzeria da Mario - Le Migliori Pizze al Taglio di Roma | Delivery e Asporto",
+        "description": "Pizzeria da Mario offre le migliori pizze al taglio di Roma con ingredienti freschi e di qualità. Ordina online per delivery o asporto. Aperto tutti i giorni.",
+        "keywords": "pizzeria Roma, pizza al taglio, delivery Roma, asporto pizza, pizza da Mario, consegna a domicilio, pizza gourmet, forno a legna",
+        "ogTitle": "Pizzeria da Mario - Autentiche Pizze al Taglio Romane",
+        "ogImage": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=1200&h=630&fit=crop"
+    },
+    "theme": {
+        "variant": "classic"
+    },
+    "restaurant": {
+        "name": "Pizzeria da Mario",
+        "logo": "/images/logo-mario.png",
+        "description": "Dal 1985, la tradizione della vera pizza al taglio romana nel cuore di Trastevere. Ingredienti freschi, impasto della nonna e amore per la cucina italiana.",
+        "cuisine": "Pizza Romana",
+        "priceRange": "€€",
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&h=600&fit=crop",
+        "phone": "+39 06 1234 5678",
+        "email": "info@pizzeriamario.it",
+        "vatNumber": "12345678901",
+        "address": {
+            "street": "Via dei Cappuccini 15",
+            "city": "Roma",
+            "postalCode": "00187",
+            "country": "IT",
+            "mapsUrl": "https://maps.google.com/?q=Via+dei+Cappuccini+15,+Roma",
+            "mapsEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2969.8497!2d12.4922!3d41.9028!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDU0JzEwLjEiTiAxMsKwMjknMzEuOSJF!5e0!3m2!1sit!2sit!4v1000000000000"
+        },
+        "openingHours": [
+            {
+                "day": "Lunedì",
+                "open": "11:00",
+                "close": "23:00",
+                "closed": false
+            },
+            {
+                "day": "Martedì",
+                "open": "11:00",
+                "close": "23:00",
+                "closed": false
+            },
+            {
+                "day": "Mercoledì",
+                "open": "11:00",
+                "close": "23:00",
+                "closed": false
+            },
+            {
+                "day": "Giovedì",
+                "open": "11:00",
+                "close": "23:00",
+                "closed": false
+            },
+            {
+                "day": "Venerdì",
+                "open": "11:00",
+                "close": "24:00",
+                "closed": false
+            },
+            {
+                "day": "Sabato",
+                "open": "11:00",
+                "close": "24:00",
+                "closed": false
+            },
+            {
+                "day": "Domenica",
+                "open": "12:00",
+                "close": "23:00",
+                "closed": false
+            }
+        ]
+    },
+    "hero": {
+        "badge": {
+            "icon": "star",
+            "text": "Vincitori Best Pizza 2023!"
+        },
+        "title": "La Vera Pizza al Taglio Romana",
+        "subtitle": "Dal 1985 nel cuore di Roma, serviamo autentiche pizze al taglio con ingredienti freschi e impasto tradizionale. Ordina online e ricevi a casa in 30 minuti!",
+        "ctaPrimary": "Guarda il Menu",
+        "ctaSecondary": "Chiama Ora",
+        "ctaSecondaryUrl": "tel:+390612345678",
+        "backgroundImage": "https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=1920&h=1080&fit=crop",
+        "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&h=600&fit=crop",
+        "features": [
+            "Ingredienti freschi e di qualità",
+            "Consegna in 30 minuti",
+            "Forno a legna tradizionale",
+            "Oltre 50 varietà di pizza"
+        ]
+    },
+    "stats": [
+        {
+            "value": "50+",
+            "label": "Varietà di Pizza",
+            "icon": "pizza-slice"
+        },
+        {
+            "value": "5000+",
+            "label": "Clienti Soddisfatti",
+            "icon": "heart"
+        },
+        {
+            "value": "30 min",
+            "label": "Consegna Media",
+            "icon": "clock"
+        },
+        {
+            "value": "38 anni",
+            "label": "Di Esperienza",
+            "icon": "award"
+        }
+    ],
+    "menu": {
+        "title": "Il Nostro Menu",
+        "subtitle": "Ogni pizza è preparata con ingredienti selezionati e cotta nel nostro forno a legna",
+        "categories": [
+            {
+                "id": "classiche",
+                "name": "Classiche"
+            },
+            {
+                "id": "speciali",
+                "name": "Speciali"
+            },
+            {
+                "id": "vegane",
+                "name": "Vegane"
+            },
+            {
+                "id": "dolci",
+                "name": "Dolci"
+            },
+            {
+                "id": "bevande",
+                "name": "Bevande"
+            }
+        ],
+        "sections": [
+            {
+                "name": "Pizze Classiche",
+                "category": "classiche",
+                "items": [
+                    {
+                        "id": "margherita",
+                        "name": "Pizza Margherita",
+                        "description": "Pomodoro San Marzano, mozzarella fior di latte, basilico fresco",
+                        "price": "8.50",
+                        "category": "classiche",
+                        "image": "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro San Marzano",
+                            "Mozzarella fior di latte",
+                            "Basilico fresco",
+                            "Olio EVO"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ],
+                        "vegetarian": true,
+                        "popular": true
+                    },
+                    {
+                        "id": "marinara",
+                        "name": "Pizza Marinara",
+                        "description": "Pomodoro, aglio, origano, olio extravergine di oliva",
+                        "price": "7.00",
+                        "category": "classiche",
+                        "image": "https://images.unsplash.com/photo-1565299507177-b0ac66763828?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Aglio",
+                            "Origano",
+                            "Olio EVO"
+                        ],
+                        "allergens": [
+                            "Glutine"
+                        ],
+                        "vegan": true
+                    },
+                    {
+                        "id": "quattro-stagioni",
+                        "name": "Pizza Quattro Stagioni",
+                        "description": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive",
+                        "price": "12.00",
+                        "category": "classiche",
+                        "image": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Mozzarella",
+                            "Prosciutto cotto",
+                            "Funghi porcini",
+                            "Carciofi",
+                            "Olive nere"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ]
+                    },
+                    {
+                        "id": "capricciosa",
+                        "name": "Pizza Capricciosa",
+                        "description": "Pomodoro, mozzarella, prosciutto cotto, funghi, carciofi, olive, uova",
+                        "price": "13.50",
+                        "category": "classiche",
+                        "image": "https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Mozzarella",
+                            "Prosciutto cotto",
+                            "Funghi",
+                            "Carciofi",
+                            "Olive",
+                            "Uova"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio",
+                            "Uova"
+                        ]
+                    },
+                    {
+                        "id": "diavola",
+                        "name": "Pizza Diavola",
+                        "description": "Pomodoro, mozzarella, salame piccante",
+                        "price": "10.50",
+                        "category": "classiche",
+                        "image": "https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Mozzarella",
+                            "Salame piccante"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ],
+                        "popular": true
+                    }
+                ]
+            },
+            {
+                "name": "Pizze Speciali",
+                "category": "speciali",
+                "items": [
+                    {
+                        "id": "bufala-e-crudo",
+                        "name": "Bufala e Crudo",
+                        "description": "Mozzarella di bufala DOP, prosciutto crudo di Parma, rucola, pomodorini",
+                        "price": "16.00",
+                        "category": "speciali",
+                        "image": "https://images.unsplash.com/photo-1573821663912-6df460f9c684?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Mozzarella di bufala DOP",
+                            "Prosciutto crudo di Parma",
+                            "Rucola",
+                            "Pomodorini"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ],
+                        "popular": true
+                    },
+                    {
+                        "id": "tartufo-e-salsiccia",
+                        "name": "Tartufo e Salsiccia",
+                        "description": "Mozzarella, salsiccia di Norcia, crema di tartufo, funghi porcini",
+                        "price": "18.50",
+                        "category": "speciali",
+                        "image": "https://images.unsplash.com/photo-1565299585323-38174c6ca374?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Mozzarella",
+                            "Salsiccia di Norcia",
+                            "Crema di tartufo",
+                            "Funghi porcini"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ]
+                    },
+                    {
+                        "id": "salmone-e-mascarpone",
+                        "name": "Salmone e Mascarpone",
+                        "description": "Base bianca, mascarpone, salmone affumicato, rucola, limone",
+                        "price": "17.00",
+                        "category": "speciali",
+                        "image": "https://images.unsplash.com/photo-1555072956-7758afb6d7d0?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Mascarpone",
+                            "Salmone affumicato",
+                            "Rucola",
+                            "Limone"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio",
+                            "Pesce"
+                        ]
+                    },
+                    {
+                        "id": "cacio-e-pepe",
+                        "name": "Cacio e Pepe",
+                        "description": "Base bianca, pecorino romano DOP, pepe nero, guanciale croccante",
+                        "price": "14.50",
+                        "category": "speciali",
+                        "image": "https://images.unsplash.com/photo-1595854341625-f33ee10dbf94?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pecorino romano DOP",
+                            "Pepe nero",
+                            "Guanciale"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ]
+                    }
+                ]
+            },
+            {
+                "name": "Pizze Vegane",
+                "category": "vegane",
+                "items": [
+                    {
+                        "id": "vegana-margherita",
+                        "name": "Margherita Vegana",
+                        "description": "Pomodoro, mozzarella vegana, basilico fresco",
+                        "price": "10.00",
+                        "category": "vegane",
+                        "image": "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Mozzarella vegana",
+                            "Basilico fresco"
+                        ],
+                        "allergens": [
+                            "Glutine"
+                        ],
+                        "vegan": true
+                    },
+                    {
+                        "id": "vegana-verdure",
+                        "name": "Ortolana Vegana",
+                        "description": "Pomodoro, zucchine grigliate, melanzane, peperoni, funghi",
+                        "price": "12.50",
+                        "category": "vegane",
+                        "image": "https://images.unsplash.com/photo-1551782450-17144efb9c50?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Pomodoro",
+                            "Zucchine grigliate",
+                            "Melanzane",
+                            "Peperoni",
+                            "Funghi"
+                        ],
+                        "allergens": [
+                            "Glutine"
+                        ],
+                        "vegan": true,
+                        "popular": true
+                    }
+                ]
+            },
+            {
+                "name": "Dolci",
+                "category": "dolci",
+                "items": [
+                    {
+                        "id": "pizza-nutella",
+                        "name": "Pizza Nutella",
+                        "description": "Impasto dolce con Nutella e zucchero a velo",
+                        "price": "8.00",
+                        "category": "dolci",
+                        "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Impasto dolce",
+                            "Nutella",
+                            "Zucchero a velo"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio",
+                            "Frutta a guscio"
+                        ],
+                        "vegetarian": true
+                    },
+                    {
+                        "id": "pizza-frutti-bosco",
+                        "name": "Pizza ai Frutti di Bosco",
+                        "description": "Impasto dolce, mascarpone, frutti di bosco freschi, miele",
+                        "price": "9.50",
+                        "category": "dolci",
+                        "image": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=400&h=300&fit=crop",
+                        "ingredients": [
+                            "Impasto dolce",
+                            "Mascarpone",
+                            "Frutti di bosco",
+                            "Miele"
+                        ],
+                        "allergens": [
+                            "Glutine",
+                            "Lattosio"
+                        ],
+                        "vegetarian": true
+                    }
+                ]
+            },
+            {
+                "name": "Bevande",
+                "category": "bevande",
+                "items": [
+                    {
+                        "id": "coca-cola",
+                        "name": "Coca-Cola",
+                        "description": "Lattina da 33cl",
+                        "price": "2.50",
+                        "category": "bevande",
+                        "image": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?w=400&h=300&fit=crop"
+                    },
+                    {
+                        "id": "birra-peroni",
+                        "name": "Birra Peroni",
+                        "description": "Bottiglia da 33cl",
+                        "price": "3.50",
+                        "category": "bevande",
+                        "image": "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=400&h=300&fit=crop",
+                        "allergens": [
+                            "Glutine"
+                        ]
+                    },
+                    {
+                        "id": "acqua-naturale",
+                        "name": "Acqua Naturale",
+                        "description": "Bottiglia da 50cl",
+                        "price": "1.50",
+                        "category": "bevande",
+                        "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?w=400&h=300&fit=crop"
+                    }
+                ]
+            }
+        ]
+    },
+    "delivery": {
+        "title": "Servizi di Consegna",
+        "subtitle": "Ordina comodamente da casa con i nostri partner di fiducia oppure ritira direttamente in pizzeria",
+        "services": [
+            {
+                "name": "Just Eat",
+                "logo": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=200&h=100&fit=crop",
+                "description": "Consegna rapida in tutta Roma",
+                "deliveryTime": "20-35 min",
+                "minOrder": "15.00",
+                "deliveryFee": "2.99",
+                "url": "https://www.justeat.it/pizzeria-mario",
+                "available": true
+            },
+            {
+                "name": "Deliveroo",
+                "logo": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=200&h=100&fit=crop",
+                "description": "Premium delivery service",
+                "deliveryTime": "25-40 min",
+                "minOrder": "12.00",
+                "deliveryFee": "3.49",
+                "url": "https://deliveroo.it/pizzeria-mario",
+                "available": true
+            },
+            {
+                "name": "Uber Eats",
+                "logo": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=200&h=100&fit=crop",
+                "description": "Consegna veloce e affidabile",
+                "deliveryTime": "15-30 min",
+                "minOrder": "10.00",
+                "deliveryFee": "2.49",
+                "url": "https://www.ubereats.com/pizzeria-mario",
+                "available": true
+            },
+            {
+                "name": "Consegna Diretta",
+                "logo": "/images/delivery-mario.png",
+                "description": "Il nostro servizio di consegna gratuita",
+                "deliveryTime": "20-30 min",
+                "minOrder": "20.00",
+                "deliveryFee": "0.00",
+                "url": "#order",
+                "available": true
+            }
+        ],
+        "areas": [
+            "Trastevere",
+            "Campo de' Fiori",
+            "Pantheon",
+            "Piazza Navona",
+            "Vaticano",
+            "Testaccio",
+            "Monti",
+            "San Lorenzo"
+        ]
+    },
+    "about": {
+        "title": "La Nostra Storia",
+        "subtitle": "Una tradizione di famiglia che continua da oltre 35 anni",
+        "image": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+        "paragraphs": [
+            "Dal 1985, la famiglia Rossi porta avanti la tradizione della vera pizza al taglio romana nel cuore di Trastevere. Quello che è iniziato come un piccolo forno di quartiere è diventato nel tempo un punto di riferimento per tutti gli amanti della pizza autentica.",
+            "Il nostro segreto? Ingredienti freschi selezionati ogni giorno, un impasto che segue la ricetta della nonna e la passione che mettiamo in ogni singola pizza. Il forno a legna, alimentato con legno di quercia, dona a ogni pizza quel sapore inconfondibile che ci ha resi famosi in tutta Roma.",
+            "Oggi, dopo tre generazioni, continuiamo a servire la stessa qualità di sempre, con l'aggiunta di servizi moderni come la consegna a domicilio e l'ordine online, perché la tradizione deve evolversi senza mai perdere la sua anima."
+        ],
+        "features": [
+            {
+                "icon": "fire",
+                "title": "Forno a Legna Originale",
+                "description": "Dal 1985, lo stesso forno a legna di quercia per un sapore autentico"
+            },
+            {
+                "icon": "leaf",
+                "title": "Ingredienti Freschi",
+                "description": "Selezioniamo ogni giorno i migliori ingredienti dal mercato locale"
+            },
+            {
+                "icon": "clock",
+                "title": "Sempre Aperti",
+                "description": "7 giorni su 7, dalla mattina alla sera, per soddisfare ogni appetito"
+            },
+            {
+                "icon": "heart",
+                "title": "Passione Familiare",
+                "description": "Tre generazioni di maestri pizzaioli tramandano l'arte della pizza"
+            }
+        ]
+    },
+    "orderForm": {
+        "title": "Ordina la Tua Pizza",
+        "subtitle": "Compila il form e ti contatteremo per confermare il tuo ordine",
+        "action": "https://formspree.io/f/YOUR-FORM-ID",
+        "fields": {
+            "name": "Il tuo nome completo",
+            "phone": "Numero di telefono",
+            "email": "Email (facoltativo)",
+            "notes": "Note aggiuntive (allergie, richieste speciali, ecc.)"
+        },
+        "submitButton": "Invia Ordine",
+        "successMessage": "🍕 Perfetto! Abbiamo ricevuto il tuo ordine. Ti chiameremo entro 5 minuti per confermare!",
+        "errorMessage": "😞 Ops! Qualcosa è andato storto. Riprova o chiamaci direttamente al 06 1234 5678."
+    },
+    "contacts": {
+        "title": "Come Raggiungerci",
+        "subtitle": "Vieni a trovarci nel cuore di Trastevere o contattaci per informazioni"
+    },
+    "contactForm": {
+        "title": "Scrivici un Messaggio",
+        "action": "https://formspree.io/f/YOUR-CONTACT-FORM-ID"
+    },
+    "social": {
+        "facebook": "https://facebook.com/pizzeriamario.roma",
+        "instagram": "https://instagram.com/pizzeriamario_official",
+        "twitter": "https://twitter.com/pizzeriamario",
+        "youtube": "https://youtube.com/c/pizzeriamario",
+        "tiktok": "https://tiktok.com/@pizzeriamario"
+    },
+    "chat": {
+        "whatsapp": {
+            "enabled": true,
+            "number": "393401234567",
+            "message": "Ciao! Vorrei ordinare una pizza 🍕",
+            "orderMessage": "Ciao! Vorrei fare un ordine per:"
+        },
+        "tawkTo": {
+            "enabled": false,
+            "widgetId": "YOUR_TAWK_TO_WIDGET_ID",
+            "apiKey": "YOUR_TAWK_TO_API_KEY"
+        }
+    },
+    "cookies": {
+        "bannerText": "Utilizziamo cookie per migliorare la tua esperienza di navigazione e per personalizzare i nostri servizi. Continuando la navigazione accetti l'uso dei cookie secondo la nostra Privacy Policy."
+    },
+    "analytics": {
+        "googleAnalytics": "GA_MEASUREMENT_ID"
+    },
+    "credits": "&copy; 2026 Pizzeria da Mario. Tutti i diritti riservati. | P.IVA 12345678901 | Design by <a href='https://yourportfolio.com' target='_blank'>Your Name</a>"
+}

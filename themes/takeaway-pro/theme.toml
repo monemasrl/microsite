@@ -1,0 +1,12 @@
+name = "Takeaway Pro"
+license = "MIT"
+licenselink = "https://github.com/yourusername/takeaway-pro/blob/main/LICENSE"
+description = "Tema professionale per pizzerie al taglio, ristoranti e servizi di ristorazione con asporto. Include listino prezzi, servizi delivery, form ordini e chat integrata."
+homepage = "https://github.com/yourusername/takeaway-pro"
+tags = ["restaurant", "takeaway", "pizzeria", "food-delivery", "menu", "orders", "business", "single-page", "responsive"]
+features = ["responsive", "menu pricing", "delivery services", "social media", "contact form", "online chat", "whatsapp integration", "color variants", "mobile-friendly", "GDPR compliant"]
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"

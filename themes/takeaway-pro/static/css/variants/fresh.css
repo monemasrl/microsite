@@ -1,0 +1,128 @@
+/* Takeaway Pro Theme - Fresh Variant */
+/* Green fresh and healthy colors */
+
+:root {
+    /* Primary & Secondary Colors */
+    --primary-color: #48bb78;
+    --primary-hover: #38a169;
+    --secondary-color: #2d3748;
+    --accent-color: #ed8936;
+    
+    /* Status Colors */
+    --success-color: #48bb78;
+    --warning-color: #ed8936;
+    --error-color: #f56565;
+    
+    /* Background Colors */
+    --bg-color: #ffffff;
+    --bg-secondary: #f0fff4;
+    --bg-dark: #1a202c;
+    
+    /* Background Gradients */
+    --hero-gradient: linear-gradient(135deg, rgba(72, 187, 120, 0.9) 0%, rgba(56, 161, 105, 0.8) 100%);
+    --card-gradient: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+}
+
+.theme-fresh .hero {
+    background: var(--hero-gradient),
+                radial-gradient(circle at 20% 80%, rgba(72, 187, 120, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(237, 131, 54, 0.1) 0%, transparent 50%),
+                var(--bg-secondary);
+}
+
+.theme-fresh .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.3);
+}
+
+.theme-fresh .btn-primary:hover {
+    box-shadow: 0 6px 25px rgba(72, 187, 120, 0.4);
+    transform: translateY(-2px);
+}
+
+.theme-fresh .menu-item {
+    border: 1px solid rgba(72, 187, 120, 0.1);
+}
+
+.theme-fresh .menu-item:hover {
+    border-color: var(--primary-color);
+    background: var(--card-gradient);
+    box-shadow: 0 8px 30px rgba(72, 187, 120, 0.15);
+}
+
+.theme-fresh .delivery-service {
+    background: var(--card-gradient);
+    border: 1px solid rgba(72, 187, 120, 0.1);
+}
+
+.theme-fresh .delivery-service:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-6px);
+}
+
+.theme-fresh .popular-badge {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #dd6b20 100%);
+}
+
+.theme-fresh .stat-icon {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    box-shadow: 0 4px 15px rgba(72, 187, 120, 0.2);
+}
+
+.theme-fresh .badge-vegetarian,
+.theme-fresh .badge-vegan {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7); }
+    70% { box-shadow: 0 0 0 8px rgba(72, 187, 120, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); }
+}
+
+.theme-fresh .nav-link:hover {
+    background: rgba(72, 187, 120, 0.1);
+}
+
+/* Fresh, organic-style decorations */
+.theme-fresh .decoration-circle {
+    background: radial-gradient(circle, rgba(72, 187, 120, 0.3) 0%, transparent 70%);
+    filter: blur(1px);
+}
+
+.theme-fresh .hero-badge {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #dd6b20 100%);
+    box-shadow: 0 2px 10px rgba(237, 131, 54, 0.3);
+}
+
+/* Organic shapes and soft shadows */
+.theme-fresh .about-image img {
+    border-radius: 20px 5px 20px 5px;
+}
+
+.theme-fresh .section-header::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--accent-color) 100%);
+    margin: 20px auto 0;
+    border-radius: 2px;
+}
+
+/* Fresh organic card effects */
+.theme-fresh .info-card:hover {
+    background: var(--card-gradient);
+    transform: rotate(-1deg) scale(1.02);
+}
+
+.theme-fresh .whatsapp-button {
+    background: var(--primary-color);
+}
+
+.theme-fresh .whatsapp-button:hover {
+    background: var(--primary-hover);
+}

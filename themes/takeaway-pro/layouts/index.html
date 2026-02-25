@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "it" }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta name="keywords" content="{{ .Site.Data.content.seo.keywords | default .Site.Params.keywords }}">
+    <meta name="author" content="{{ .Site.Data.content.restaurant.name | default .Site.Params.author }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ .Site.Data.content.seo.title | default .Site.Title }}">
+    <meta property="og:description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ .Site.BaseURL }}">
+    {{ with .Site.Data.content.seo.ogImage }}
+    <meta property="og:image" content="{{ . }}">
+    {{ end }}
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ .Site.Data.content.seo.title | default .Site.Title }}">
+    <meta name="twitter:description" content="{{ .Site.Data.content.seo.description | default .Site.Params.description }}">
+    {{ with .Site.Data.content.seo.ogImage }}
+    <meta name="twitter:image" content="{{ . }}">
+    {{ end }}
+    
+    <title>{{ .Site.Data.content.seo.title | default .Site.Title }}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+    {{ if .Site.Data.content.theme.variant }}
+    <link rel="stylesheet" href="{{ printf "css/variants/%s.css" .Site.Data.content.theme.variant | relURL }}">
+    {{ end }}
+
+    <!-- Restaurant Schema.org Microdata -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Restaurant",
+        "name": "{{ .Site.Data.content.restaurant.name }}",
+        "description": "{{ .Site.Data.content.restaurant.description }}",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "{{ .Site.Data.content.restaurant.address.street }}",
+            "addressLocality": "{{ .Site.Data.content.restaurant.address.city }}",
+            "postalCode": "{{ .Site.Data.content.restaurant.address.postalCode }}",
+            "addressCountry": "{{ .Site.Data.content.restaurant.address.country | default "IT" }}"
+        },
+        "telephone": "{{ .Site.Data.content.restaurant.phone }}",
+        "url": "{{ .Site.BaseURL }}",
+        {{ with .Site.Data.content.restaurant.image }}
+        "image": "{{ . }}",
+        {{ end }}
+        "servesCuisine": "{{ .Site.Data.content.restaurant.cuisine | default "Italian" }}",
+        "priceRange": "{{ .Site.Data.content.restaurant.priceRange | default "€" }}",
+        "hasMenu": {
+            "@type": "Menu",
+            "hasMenuSection": [
+                {{ range $index, $section := .Site.Data.content.menu.sections }}
+                {{ if $index }},{{ end }}
+                {
+                    "@type": "MenuSection",
+                    "name": "{{ .name }}",
+                    "hasMenuItem": [
+                        {{ range $itemIndex, $item := .items }}
+                        {{ if $itemIndex }},{{ end }}
+                        {
+                            "@type": "MenuItem",
+                            "name": "{{ .name }}",
+                            "description": "{{ .description }}",
+                            "offers": {
+                                "@type": "Offer",
+                                "price": "{{ .price }}",
+                                "priceCurrency": "EUR"
+                            }
+                        }
+                        {{ end }}
+                    ]
+                }
+                {{ end }}
+            ]
+        },
+        "openingHoursSpecification": [
+            {{ range $index, $hours := .Site.Data.content.restaurant.openingHours }}
+            {{ if $index }},{{ end }}
+            {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": "{{ .day }}",
+                "opens": "{{ .open }}",
+                "closes": "{{ .close }}"
+            }
+            {{ end }}
+        ]
+    }
+    </script>
+</head>
+<body class="theme-{{ .Site.Data.content.theme.variant | default "classic" }}">
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="pizza-loader">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <p>Caricamento in corso...</p>
+        </div>
+    </div>
+
+    <!-- Cookie Banner -->
+    <div class="cookie-banner" id="cookieBanner">
+        <div class="cookie-content">
+            <div class="cookie-text">
+                <i class="fas fa-cookie-bite"></i>
+                <p>{{ .Site.Data.content.cookies.bannerText | default "Utilizziamo cookie per migliorare la tua esperienza e personalizzare i nostri servizi. Continuando la navigazione accetti l'uso dei cookie." }}</p>
+            </div>
+            <div class="cookie-actions">
+                <button class="btn-text" id="cookieSettings">Impostazioni</button>
+                <button class="btn btn-primary btn-sm" id="cookieAccept">Accetta</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- WhatsApp Chat Widget -->
+    {{ if .Site.Data.content.chat.whatsapp.enabled }}
+    <div class="whatsapp-widget">
+        <a href="https://wa.me/{{ .Site.Data.content.chat.whatsapp.number }}?text={{ .Site.Data.content.chat.whatsapp.message | urlquery }}" 
+           target="_blank" 
+           class="whatsapp-button"
+           title="Contattaci su WhatsApp">
+            <i class="fab fa-whatsapp"></i>
+            <span class="whatsapp-text">Ordina ora!</span>
+        </a>
+    </div>
+    {{ end }}
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <div class="nav-logo">
+                {{ if .Site.Data.content.restaurant.logo }}
+                <img src="{{ .Site.Data.content.restaurant.logo }}" alt="{{ .Site.Data.content.restaurant.name }}" class="logo-image">
+                {{ else }}
+                <span class="logo-icon">🍕</span>
+                {{ end }}
+                <span class="logo-text">{{ .Site.Data.content.restaurant.name }}</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li class="nav-item"><a href="#hero" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#menu" class="nav-link">Menu</a></li>
+                    <li class="nav-item"><a href="#delivery" class="nav-link">Delivery</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">Chi Siamo</a></li>
+                    <li class="nav-item"><a href="#contacts" class="nav-link">Contatti</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-actions">
+                {{ if .Site.Data.content.restaurant.phone }}
+                <a href="tel:{{ .Site.Data.content.restaurant.phone }}" class="btn-text">
+                    <i class="fas fa-phone"></i> 
+                    <span class="hidden-mobile">Chiama</span>
+                </a>
+                {{ end }}
+                <a href="#order" class="btn btn-primary btn-sm">
+                    <i class="fas fa-shopping-cart"></i> Ordina Ora
+                </a>
+            </div>
+
+            <button class="nav-toggle" id="navToggle">
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+                <span class="hamburger"></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main">
+        <!-- Hero Section -->
+        <section class="hero section" id="hero">
+            <div class="hero-background">
+                {{ if .Site.Data.content.hero.backgroundImage }}
+                <img src="{{ .Site.Data.content.hero.backgroundImage }}" alt="Background" class="hero-bg-image">
+                {{ end }}
+                <div class="hero-overlay"></div>
+            </div>
+            
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        {{ with .Site.Data.content.hero.badge }}
+                        <div class="hero-badge">
+                            <i class="fas fa-{{ .icon | default "star" }}"></i>
+                            <span>{{ .text }}</span>
+                        </div>
+                        {{ end }}
+                        
+                        <h1 class="hero-title">{{ .Site.Data.content.hero.title }}</h1>
+                        <p class="hero-subtitle">{{ .Site.Data.content.hero.subtitle }}</p>
+                        
+                        <div class="hero-features">
+                            {{ range .Site.Data.content.hero.features }}
+                            <div class="feature-item">
+                                <i class="fas fa-check"></i>
+                                <span>{{ . }}</span>
+                            </div>
+                            {{ end }}
+                        </div>
+                        
+                        <div class="hero-actions">
+                            <a href="#menu" class="btn btn-primary btn-lg">
+                                <i class="fas fa-utensils"></i>
+                                {{ .Site.Data.content.hero.ctaPrimary | default "Guarda il Menu" }}
+                            </a>
+                            {{ if .Site.Data.content.hero.ctaSecondary }}
+                            <a href="{{ .Site.Data.content.hero.ctaSecondaryUrl | default "#order" }}" class="btn btn-outline btn-lg">
+                                <i class="fas fa-phone"></i>
+                                {{ .Site.Data.content.hero.ctaSecondary }}
+                            </a>
+                            {{ end }}
+                        </div>
+                    </div>
+                    
+                    {{ if .Site.Data.content.hero.image }}
+                    <div class="hero-image">
+                        <img src="{{ .Site.Data.content.hero.image }}" alt="{{ .Site.Data.content.restaurant.name }}" class="hero-img">
+                        <div class="hero-decoration">
+                            <div class="decoration-circle decoration-1"></div>
+                            <div class="decoration-circle decoration-2"></div>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+                
+                {{ if .Site.Data.content.restaurant.openingHours }}
+                <div class="opening-hours-widget">
+                    <div class="widget-header">
+                        <i class="fas fa-clock"></i>
+                        <span>Orari di apertura</span>
+                    </div>
+                    <div class="hours-list">
+                        {{ range .Site.Data.content.restaurant.openingHours }}
+                        <div class="hours-item {{ if .closed }}closed{{ end }}">
+                            <span class="day">{{ .day }}</span>
+                            <span class="time">{{ if .closed }}Chiuso{{ else }}{{ .open }} - {{ .close }}{{ end }}</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        {{ if .Site.Data.content.stats }}
+        <section class="stats section">
+            <div class="container">
+                <div class="stats-grid">
+                    {{ range .Site.Data.content.stats }}
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-{{ .icon }}"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 class="stat-value">{{ .value }}</h3>
+                            <p class="stat-label">{{ .label }}</p>
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Menu Section -->
+        <section class="menu section" id="menu">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{{ .Site.Data.content.menu.title | default "Il Nostro Menu" }}</h2>
+                    <p class="section-subtitle">{{ .Site.Data.content.menu.subtitle | default "Scopri le nostre specialità preparate con ingredienti freschi e di qualità" }}</p>
+                </div>
+
+                {{ if .Site.Data.content.menu.categories }}
+                <div class="menu-categories">
+                    <button class="category-btn active" data-category="all">Tutti</button>
+                    {{ range .Site.Data.content.menu.categories }}
+                    <button class="category-btn" data-category="{{ .id }}">{{ .name }}</button>
+                    {{ end }}
+                </div>
+                {{ end }}
+
+                <div class="menu-grid" id="menuGrid">
+                    {{ range .Site.Data.content.menu.sections }}
+                    <div class="menu-section" data-category="{{ .category | default "all" }}">
+                        <h3 class="menu-section-title">{{ .name }}</h3>
+                        <div class="menu-items">
+                            {{ range .items }}
+                            <div class="menu-item" data-category="{{ .category | default "all" }}">
+                                {{ if .image }}
+                                <div class="item-image">
+                                    <img src="{{ .image }}" alt="{{ .name }}" loading="lazy">
+                                    {{ if .popular }}
+                                    <div class="popular-badge">
+                                        <i class="fas fa-star"></i>
+                                        Popolare
+                                    </div>
+                                    {{ end }}
+                                </div>
+                                {{ end }}
+                                
+                                <div class="item-content">
+                                    <div class="item-header">
+                                        <h4 class="item-name">{{ .name }}</h4>
+                                        <span class="item-price">€{{ .price }}</span>
+                                    </div>
+                                    
+                                    {{ if .description }}
+                                    <p class="item-description">{{ .description }}</p>
+                                    {{ end }}
+                                    
+                                    {{ if .ingredients }}
+                                    <div class="item-ingredients">
+                                        <small>{{ delimit .ingredients ", " }}</small>
+                                    </div>
+                                    {{ end }}
+                                    
+                                    {{ if .allergens }}
+                                    <div class="item-allergens">
+                                        <i class="fas fa-exclamation-triangle"></i>
+                                        <small>Allergeni: {{ delimit .allergens ", " }}</small>
+                                    </div>
+                                    {{ end }}
+                                    
+                                    <div class="item-actions">
+                                        <button class="btn btn-sm btn-outline add-to-cart" 
+                                                data-name="{{ .name }}" 
+                                                data-price="{{ .price }}"
+                                                data-id="{{ .id | default .name }}">
+                                            <i class="fas fa-plus"></i>
+                                            Aggiungi
+                                        </button>
+                                        
+                                        {{ if or .vegetarian .vegan .glutenFree }}
+                                        <div class="item-badges">
+                                            {{ if .vegetarian }}<span class="badge badge-vegetarian" title="Vegetariano">🌱</span>{{ end }}
+                                            {{ if .vegan }}<span class="badge badge-vegan" title="Vegano">🌿</span>{{ end }}
+                                            {{ if .glutenFree }}<span class="badge badge-gluten-free" title="Senza Glutine">⚪</span>{{ end }}
+                                        </div>
+                                        {{ end }}
+                                    </div>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                    </div>
+                    {{ end }}
+                </div>
+
+                <!-- Shopping Cart Widget -->
+                <div class="cart-widget" id="cartWidget">
+                    <div class="cart-header">
+                        <h4><i class="fas fa-shopping-cart"></i> Il tuo ordine</h4>
+                        <button class="cart-toggle" id="cartToggle">
+                            <i class="fas fa-chevron-up"></i>
+                        </button>
+                    </div>
+                    <div class="cart-content">
+                        <div class="cart-items" id="cartItems">
+                            <p class="empty-cart">Il carrello è vuoto</p>
+                        </div>
+                        <div class="cart-total">
+                            <div class="total-line">
+                                <span>Totale: <strong id="cartTotal">€0.00</strong></span>
+                            </div>
+                        </div>
+                        <div class="cart-actions">
+                            <button class="btn btn-outline btn-sm" id="clearCart">Svuota</button>
+                            <button class="btn btn-primary btn-sm" id="proceedOrder" disabled>Ordina</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Delivery Services Section -->
+        <section class="delivery section" id="delivery">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{{ .Site.Data.content.delivery.title | default "Servizi di Consegna" }}</h2>
+                    <p class="section-subtitle">{{ .Site.Data.content.delivery.subtitle | default "Ordina comodamente da casa con i nostri partner di fiducia" }}</p>
+                </div>
+
+                <div class="delivery-grid">
+                    {{ range .Site.Data.content.delivery.services }}
+                    <div class="delivery-service">
+                        <div class="service-logo">
+                            <img src="{{ .logo }}" alt="{{ .name }}" loading="lazy">
+                        </div>
+                        <div class="service-content">
+                            <h4 class="service-name">{{ .name }}</h4>
+                            {{ if .description }}
+                            <p class="service-description">{{ .description }}</p>
+                            {{ end }}
+                            <div class="service-info">
+                                {{ if .deliveryTime }}
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>{{ .deliveryTime }}</span>
+                                </div>
+                                {{ end }}
+                                {{ if .minOrder }}
+                                <div class="info-item">
+                                    <i class="fas fa-euro-sign"></i>
+                                    <span>Min. €{{ .minOrder }}</span>
+                                </div>
+                                {{ end }}
+                                {{ if .deliveryFee }}
+                                <div class="info-item">
+                                    <i class="fas fa-truck"></i>
+                                    <span>Consegna €{{ .deliveryFee }}</span>
+                                </div>
+                                {{ end }}
+                            </div>
+                            {{ if .url }}
+                            <a href="{{ .url }}" target="_blank" class="btn btn-outline btn-sm">
+                                <i class="fas fa-external-link-alt"></i>
+                                Ordina su {{ .name }}
+                            </a>
+                            {{ end }}
+                        </div>
+                        {{ if .available }}
+                        <div class="service-status available">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Disponibile</span>
+                        </div>
+                        {{ else }}
+                        <div class="service-status unavailable">
+                            <i class="fas fa-times-circle"></i>
+                            <span>Non disponibile</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+
+                <!-- Delivery Areas -->
+                {{ if .Site.Data.content.delivery.areas }}
+                <div class="delivery-areas">
+                    <h3>Zone di Consegna</h3>
+                    <div class="areas-grid">
+                        {{ range .Site.Data.content.delivery.areas }}
+                        <div class="area-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ . }}</span>
+                        </div>
+                        {{ end }}
+                    </div>
+                </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <!-- About Section -->
+        {{ if .Site.Data.content.about }}
+        <section class="about section" id="about">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-text">
+                        <h2 class="section-title">{{ .Site.Data.content.about.title }}</h2>
+                        <p class="section-subtitle">{{ .Site.Data.content.about.subtitle }}</p>
+                        
+                        {{ range .Site.Data.content.about.paragraphs }}
+                        <p>{{ . }}</p>
+                        {{ end }}
+                        
+                        {{ if .Site.Data.content.about.features }}
+                        <div class="about-features">
+                            {{ range .Site.Data.content.about.features }}
+                            <div class="feature-item">
+                                <i class="fas fa-{{ .icon }}"></i>
+                                <div class="feature-content">
+                                    <h4>{{ .title }}</h4>
+                                    <p>{{ .description }}</p>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+                        {{ end }}
+                    </div>
+                    
+                    {{ if .Site.Data.content.about.image }}
+                    <div class="about-image">
+                        <img src="{{ .Site.Data.content.about.image }}" alt="Chi siamo" loading="lazy">
+                    </div>
+                    {{ end }}
+                </div>
+            </div>
+        </section>
+        {{ end }}
+
+        <!-- Order Form Section -->
+        <section class="order section" id="order">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{{ .Site.Data.content.orderForm.title | default "Ordina Ora" }}</h2>
+                    <p class="section-subtitle">{{ .Site.Data.content.orderForm.subtitle | default "Compila il form per effettuare il tuo ordine" }}</p>
+                </div>
+
+                <div class="order-content">
+                    <form class="order-form" id="orderForm" action="{{ .Site.Data.content.orderForm.action }}" method="POST">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="customerName">
+                                    <i class="fas fa-user"></i>
+                                    {{ .Site.Data.content.orderForm.fields.name | default "Il tuo nome" }}
+                                </label>
+                                <input type="text" id="customerName" name="name" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customerPhone">
+                                    <i class="fas fa-phone"></i>
+                                    {{ .Site.Data.content.orderForm.fields.phone | default "Numero di telefono" }}
+                                </label>
+                                <input type="tel" id="customerPhone" name="phone" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="customerEmail">
+                                    <i class="fas fa-envelope"></i>
+                                    {{ .Site.Data.content.orderForm.fields.email | default "Email (facoltativo)" }}
+                                </label>
+                                <input type="email" id="customerEmail" name="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="orderType">
+                                    <i class="fas fa-truck"></i>
+                                    Tipo di ordine
+                                </label>
+                                <select id="orderType" name="orderType" required>
+                                    <option value="">Seleziona...</option>
+                                    <option value="delivery">Consegna a domicilio</option>
+                                    <option value="pickUp">Ritiro in negozio</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group full-width" id="addressGroup" style="display: none;">
+                                <label for="deliveryAddress">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    Indirizzo di consegna
+                                </label>
+                                <textarea id="deliveryAddress" name="address" rows="2" placeholder="Via, numero civico, città, CAP"></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="orderItems">
+                                    <i class="fas fa-list"></i>
+                                    Il tuo ordine
+                                </label>
+                                <textarea id="orderItems" name="orderItems" rows="4" readonly placeholder="I tuoi articoli appariranno qui..."></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="orderNotes">
+                                    <i class="fas fa-comment"></i>
+                                    {{ .Site.Data.content.orderForm.fields.notes | default "Note aggiuntive (facoltativo)" }}
+                                </label>
+                                <textarea id="orderNotes" name="notes" rows="3" placeholder="Eventuali richieste speciali, allergie, ecc."></textarea>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="privacyConsent" name="privacy" required>
+                                    <span class="checkmark"></span>
+                                    Accetto il trattamento dei dati personali secondo la 
+                                    <a href="/privacy" target="_blank">Privacy Policy</a>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="order-summary">
+                            <div class="summary-header">
+                                <h4><i class="fas fa-receipt"></i> Riepilogo Ordine</h4>
+                            </div>
+                            <div class="summary-items" id="summaryItems">
+                                <p class="empty-summary">Nessun articolo selezionato</p>
+                            </div>
+                            <div class="summary-total">
+                                <div class="total-line">
+                                    <span>Subtotale</span>
+                                    <span id="summarySubtotal">€0.00</span>
+                                </div>
+                                <div class="total-line delivery-fee" style="display: none;">
+                                    <span>Costo consegna</span>
+                                    <span id="summaryDeliveryFee">€3.50</span>
+                                </div>
+                                <div class="total-line final-total">
+                                    <span><strong>Totale</strong></span>
+                                    <span><strong id="summaryTotal">€0.00</strong></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-outline" id="resetForm">
+                                <i class="fas fa-undo"></i>
+                                Reimposta
+                            </button>
+                            <button type="submit" class="btn btn-primary" id="submitOrder" disabled>
+                                <i class="fas fa-paper-plane"></i>
+                                {{ .Site.Data.content.orderForm.submitButton | default "Invia Ordine" }}
+                            </button>
+                        </div>
+
+                        <!-- Form Messages -->
+                        <div class="form-message success" id="successMessage" style="display: none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>{{ .Site.Data.content.orderForm.successMessage | default "🎉 Ordine inviato con successo! Ti contatteremo a breve." }}</span>
+                        </div>
+
+                        <div class="form-message error" id="errorMessage" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>{{ .Site.Data.content.orderForm.errorMessage | default "😞 Errore durante l'invio. Riprova o contattaci direttamente." }}</span>
+                        </div>
+                    </form>
+
+                    <!-- Quick Contact Options -->
+                    <div class="quick-contact">
+                        <h4>Preferisci ordinare per telefono?</h4>
+                        <div class="contact-options">
+                            {{ if .Site.Data.content.restaurant.phone }}
+                            <a href="tel:{{ .Site.Data.content.restaurant.phone }}" class="contact-btn">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <span class="btn-title">Chiama ora</span>
+                                    <span class="btn-subtitle">{{ .Site.Data.content.restaurant.phone }}</span>
+                                </div>
+                            </a>
+                            {{ end }}
+
+                            {{ if .Site.Data.content.chat.whatsapp.enabled }}
+                            <a href="https://wa.me/{{ .Site.Data.content.chat.whatsapp.number }}?text={{ .Site.Data.content.chat.whatsapp.orderMessage | urlquery }}" 
+                               target="_blank" class="contact-btn">
+                                <i class="fab fa-whatsapp"></i>
+                                <div>
+                                    <span class="btn-title">WhatsApp</span>
+                                    <span class="btn-subtitle">Ordina velocemente</span>
+                                </div>
+                            </a>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contacts section" id="contacts">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">{{ .Site.Data.content.contacts.title | default "Contatti" }}</h2>
+                    <p class="section-subtitle">{{ .Site.Data.content.contacts.subtitle | default "Vieni a trovarci o contattaci per informazioni" }}</p>
+                </div>
+
+                <div class="contacts-grid">
+                    <!-- Contact Information -->
+                    <div class="contact-info">
+                        <div class="info-cards">
+                            {{ if .Site.Data.content.restaurant.address }}
+                            <div class="info-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Indirizzo</h4>
+                                    <p>{{ .Site.Data.content.restaurant.address.street }}<br>
+                                       {{ .Site.Data.content.restaurant.address.city }}, {{ .Site.Data.content.restaurant.address.postalCode }}</p>
+                                    {{ if .Site.Data.content.restaurant.address.mapsUrl }}
+                                    <a href="{{ .Site.Data.content.restaurant.address.mapsUrl }}" target="_blank" class="btn-text">
+                                        <i class="fas fa-directions"></i> Indicazioni
+                                    </a>
+                                    {{ end }}
+                                </div>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Data.content.restaurant.phone }}
+                            <div class="info-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Telefono</h4>
+                                    <p>{{ .Site.Data.content.restaurant.phone }}</p>
+                                    <a href="tel:{{ .Site.Data.content.restaurant.phone }}" class="btn-text">
+                                        <i class="fas fa-phone"></i> Chiama ora
+                                    </a>
+                                </div>
+                            </div>
+                            {{ end }}
+
+                            {{ if .Site.Data.content.restaurant.email }}
+                            <div class="info-card">
+                                <div class="card-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h4>Email</h4>
+                                    <p>{{ .Site.Data.content.restaurant.email }}</p>
+                                    <a href="mailto:{{ .Site.Data.content.restaurant.email }}" class="btn-text">
+                                        <i class="fas fa-envelope"></i> Invia email
+                                    </a>
+                                </div>
+                            </div>
+                            {{ end }}
+                        </div>
+
+                        <!-- Social Media -->
+                        {{ if .Site.Data.content.social }}
+                        <div class="social-media">
+                            <h4>Seguici sui social</h4>
+                            <div class="social-links">
+                                {{ range $platform, $url := .Site.Data.content.social }}
+                                {{ if $url }}
+                                <a href="{{ $url }}" target="_blank" class="social-link" title="{{ $platform }}">
+                                    <i class="fab fa-{{ $platform }}"></i>
+                                </a>
+                                {{ end }}
+                                {{ end }}
+                            </div>
+                        </div>
+                        {{ end }}
+                    </div>
+
+                    <!-- Map or Contact Form -->
+                    <div class="contact-visual">
+                        {{ if .Site.Data.content.restaurant.address.mapsEmbed }}
+                        <div class="map-container">
+                            <iframe src="{{ .Site.Data.content.restaurant.address.mapsEmbed }}" 
+                                    width="100%" 
+                                    height="400" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                            </iframe>
+                        </div>
+                        {{ else }}
+                        <!-- Alternative Contact Form -->
+                        <form class="contact-form" action="{{ .Site.Data.content.contactForm.action }}" method="POST">
+                            <h4>{{ .Site.Data.content.contactForm.title | default "Inviaci un messaggio" }}</h4>
+                            
+                            <div class="form-group">
+                                <input type="text" name="name" placeholder="Il tuo nome" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="email" name="email" placeholder="La tua email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="tel" name="phone" placeholder="Telefono (facoltativo)">
+                            </div>
+                            
+                            <div class="form-group">
+                                <textarea name="message" rows="4" placeholder="Il tuo messaggio" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i>
+                                Invia Messaggio
+                            </button>
+                        </form>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        {{ if .Site.Data.content.restaurant.logo }}
+                        <img src="{{ .Site.Data.content.restaurant.logo }}" alt="{{ .Site.Data.content.restaurant.name }}">
+                        {{ else }}
+                        <span class="logo-icon">🍕</span>
+                        {{ end }}
+                        <span class="logo-text">{{ .Site.Data.content.restaurant.name }}</span>
+                    </div>
+                    
+                    <p class="footer-description">{{ .Site.Data.content.restaurant.description }}</p>
+                    
+                    {{ if .Site.Data.content.social }}
+                    <div class="footer-social">
+                        {{ range $platform, $url := .Site.Data.content.social }}
+                        {{ if $url }}
+                        <a href="{{ $url }}" target="_blank" class="social-link" title="{{ $platform }}">
+                            <i class="fab fa-{{ $platform }}"></i>
+                        </a>
+                        {{ end }}
+                        {{ end }}
+                    </div>
+                    {{ end }}
+                </div>
+
+                <div class="footer-links">
+                    <div class="links-column">
+                        <h4>Menu</h4>
+                        <ul>
+                            <li><a href="#menu">La nostra carta</a></li>
+                            <li><a href="#delivery">Delivery</a></li>
+                            <li><a href="#order">Ordina online</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="links-column">
+                        <h4>Informazioni</h4>
+                        <ul>
+                            <li><a href="#about">Chi siamo</a></li>
+                            <li><a href="#contacts">Contatti</a></li>
+                            <li><a href="/privacy">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="links-column">
+                        <h4>Contatti</h4>
+                        <ul>
+                            {{ if .Site.Data.content.restaurant.phone }}
+                            <li><a href="tel:{{ .Site.Data.content.restaurant.phone }}">{{ .Site.Data.content.restaurant.phone }}</a></li>
+                            {{ end }}
+                            {{ if .Site.Data.content.restaurant.email }}
+                            <li><a href="mailto:{{ .Site.Data.content.restaurant.email }}">{{ .Site.Data.content.restaurant.email }}</a></li>
+                            {{ end }}
+                            {{ if .Site.Data.content.restaurant.address }}
+                            <li>{{ .Site.Data.content.restaurant.address.street }}<br>{{ .Site.Data.content.restaurant.address.city }}</li>
+                            {{ end }}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-credits">
+                    {{ .Site.Data.content.credits | default "&copy; 2026 {{.Site.Data.content.restaurant.name}}. Tutti i diritti riservati." | safeHTML }}
+                </div>
+                
+                {{ if .Site.Data.content.restaurant.vatNumber }}
+                <div class="footer-legal">
+                    <span>P.IVA {{ .Site.Data.content.restaurant.vatNumber }}</span>
+                </div>
+                {{ end }}
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chat Integration (Tawk.to / Other) -->
+    {{ if .Site.Data.content.chat.tawkTo.enabled }}
+    <script>
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/{{ .Site.Data.content.chat.tawkTo.widgetId }}/{{ .Site.Data.content.chat.tawkTo.apiKey }}';
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    {{ end }}
+
+    <!-- JavaScript -->
+    <script src="{{ "js/main.js" | relURL }}"></script>
+    {{ if .Site.Data.content.analytics.googleAnalytics }}
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Data.content.analytics.googleAnalytics }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', '{{ .Site.Data.content.analytics.googleAnalytics }}');
+    </script>
+    {{ end }}
+</body>
+</html>

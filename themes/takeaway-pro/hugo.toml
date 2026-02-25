@@ -1,0 +1,35 @@
+baseURL = "https://example.com"
+languageCode = "it-it"
+title = "Pizzeria da Mario - Asporto e Delivery"
+theme = "takeaway-pro"
+
+# Opzioni generali del sito
+[params]
+  description = "Pizzeria da Mario - Le migliori pizze al taglio della città. Ordina online per asporto e delivery."
+  keywords = "pizzeria, pizza al taglio, delivery, asporto, Roma, cibo italiano"
+  author = "Pizzeria da Mario"
+
+# Configurazione menu principale
+[menu]
+  [[menu.main]]
+    name = "Menu"
+    url = "#menu"
+    weight = 10
+  [[menu.main]]
+    name = "Delivery"
+    url = "#delivery"
+    weight = 20
+  [[menu.main]]
+    name = "Contatti"
+    url = "#contacts"
+    weight = 30
+  [[menu.main]]
+    name = "Ordina"
+    url = "#order"
+    weight = 40
+
+# Configurazione per i contenuti dinamici
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

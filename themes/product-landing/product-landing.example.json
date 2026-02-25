@@ -1,0 +1,502 @@
+{
+    "seo": {
+        "title": "TaskFlow - La Tua Piattaforma di Project Management All-in-One",
+        "description": "TaskFlow è la soluzione completa per gestire progetti, team e obiettivi. Aumenta la produttività del tuo team con strumenti intuitivi e potenti funzionalità di collaborazione.",
+        "keywords": "project management, gestione progetti, collaboration, produttività, task management, team collaboration, agile, kanban",
+        "ogTitle": "TaskFlow - Gestisci i Tuoi Progetti con Semplicità",
+        "ogImage": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=630&fit=crop"
+    },
+    "product": {
+        "name": "TaskFlow",
+        "logoIcon": "🚀",
+        "company": "TaskFlow Inc.",
+        "description": "La piattaforma all-in-one per la gestione di progetti e team che semplifica il lavoro collaborativo.",
+        "category": "BusinessApplication",
+        "operatingSystem": "Web, iOS, Android, Windows, macOS"
+    },
+    "hero": {
+        "badge": {
+            "icon": "star",
+            "text": "Nuovo: AI Assistant integrato!"
+        },
+        "title": "Gestisci i Tuoi Progetti con Semplicità",
+        "subtitle": "TaskFlow è la piattaforma all-in-one che aiuta team di ogni dimensione a organizzare, tracciare e completare progetti con successo. Aumenta la produttività fino al 40%.",
+        "ctaPrimary": "Inizia Gratis per 14 Giorni",
+        "ctaSecondary": "Guarda il Video",
+        "ctaSecondaryUrl": "#demo",
+        "image": "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=1200&h=800&fit=crop",
+        "features": [
+            "Nessuna carta di credito richiesta",
+            "Setup in 2 minuti",
+            "Cancella in qualsiasi momento"
+        ]
+    },
+    "stats": [
+        {
+            "value": "50000+",
+            "label": "Team Attivi"
+        },
+        {
+            "value": "2M+",
+            "label": "Progetti Completati"
+        },
+        {
+            "value": "99.9%",
+            "label": "Uptime Garantito"
+        },
+        {
+            "value": "4.9/5",
+            "label": "Rating Medio"
+        }
+    ],
+    "features": {
+        "title": "Tutto Ciò di Cui Hai Bisogno per Avere Successo",
+        "subtitle": "Le funzionalità potenti che il tuo team amerà, in un'interfaccia che tutti possono usare",
+        "items": [
+            {
+                "icon": "tasks",
+                "title": "Gestione Task Intelligente",
+                "description": "Crea, assegna e traccia task con facilità. Board Kanban, liste, timeline e calendari in un unico posto."
+            },
+            {
+                "icon": "users",
+                "title": "Collaborazione in Tempo Reale",
+                "description": "Commenta, condividi file e lavora insieme al tuo team senza rallentamenti. Chat integrata e notifiche smart."
+            },
+            {
+                "icon": "chart-line",
+                "title": "Report e Analytics Avanzati",
+                "description": "Visualizza metriche dettagliate, genera report personalizzati e prendi decisioni basate sui dati."
+            },
+            {
+                "icon": "clock",
+                "title": "Time Tracking Automatico",
+                "description": "Traccia il tempo dedicato ad ogni task automaticamente. Crea timesheet e analisi di produttività."
+            },
+            {
+                "icon": "robot",
+                "title": "Automazioni Potenti",
+                "description": "Automatizza i processi ripetitivi con regole personalizzate. Risparmia ore di lavoro ogni settimana."
+            },
+            {
+                "icon": "plug",
+                "title": "Integrazioni Illimitate",
+                "description": "Connetti TaskFlow con oltre 1000+ strumenti: Slack, Google Drive, GitHub, Zapier e molti altri."
+            },
+            {
+                "icon": "mobile-alt",
+                "title": "App Mobile Native",
+                "description": "Lavora ovunque con le nostre app iOS e Android. Sincronizzazione istantanea su tutti i dispositivi."
+            },
+            {
+                "icon": "shield-alt",
+                "title": "Sicurezza Enterprise",
+                "description": "Crittografia end-to-end, autenticazione a due fattori, SSO e conformità GDPR garantita."
+            },
+            {
+                "icon": "palette",
+                "title": "Personalizzazione Totale",
+                "description": "Adatta TaskFlow alle tue esigenze. Campi custom, workflow personalizzati e branding aziendale."
+            }
+        ]
+    },
+    "benefits": [
+        {
+            "title": "Visualizza i Progetti nel Modo Che Preferisci",
+            "description": "Che tu preferisca board Kanban, liste, timeline Gantt o calendari, TaskFlow ti permette di visualizzare i tuoi progetti esattamente come vuoi. Passa da una vista all'altra con un click.",
+            "image": "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=600&fit=crop",
+            "features": [
+                "Board Kanban drag & drop",
+                "Timeline Gantt interattive",
+                "Calendario condiviso del team",
+                "Vista lista con filtri avanzati"
+            ]
+        },
+        {
+            "title": "Collabora Senza Attriti con il Tuo Team",
+            "description": "Comunicazione perfetta integrata direttamente nei tuoi progetti. Menziona colleghi, condividi file, assegna task e tieni tutti allineati senza dover passare tra mille strumenti diversi.",
+            "image": "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&h=600&fit=crop",
+            "features": [
+                "Commenti in-context su ogni task",
+                "Condivisione file drag & drop",
+                "Notifiche intelligenti e personalizzabili",
+                "Activity feed in tempo reale"
+            ]
+        },
+        {
+            "title": "Automatizza e Risparmia Tempo Prezioso",
+            "description": "Crea automazioni personalizzate senza scrivere codice. Quando qualcosa accade, TaskFlow può automaticamente creare task, assegnare persone, inviare notifiche e molto altro.",
+            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
+            "features": [
+                "Builder automazioni no-code",
+                "Template pronti all'uso",
+                "Trigger e azioni personalizzabili",
+                "Integrazioni con Zapier e Make"
+            ]
+        }
+    ],
+    "howItWorks": {
+        "title": "Inizia in 3 Semplici Passi",
+        "subtitle": "Da zero a produttivo in meno di 5 minuti",
+        "steps": [
+            {
+                "icon": "user-plus",
+                "title": "Crea il Tuo Account",
+                "description": "Registrati gratuitamente con la tua email o account Google. Nessuna carta di credito richiesta."
+            },
+            {
+                "icon": "folder-plus",
+                "title": "Configura il Tuo Workspace",
+                "description": "Invita i tuoi colleghi, crea i tuoi primi progetti e personalizza il workspace secondo le tue esigenze."
+            },
+            {
+                "icon": "rocket",
+                "title": "Inizia a Collaborare",
+                "description": "Crea task, assegna responsabilità e inizia a vedere la magia del lavoro collaborativo efficiente."
+            }
+        ]
+    },
+    "pricing": {
+        "title": "Piani Semplici e Trasparenti",
+        "subtitle": "Inizia gratis e cresci con noi. Nessun costo nascosto, nessun vincolo.",
+        "toggle": true,
+        "defaultYearly": false,
+        "yearlyDiscount": "Risparmia il 20%",
+        "plans": [
+            {
+                "icon": "gift",
+                "name": "Free",
+                "description": "Perfetto per team piccoli e progetti personali",
+                "priceMonthly": "0",
+                "priceYearly": "0",
+                "ctaText": "Inizia Gratis",
+                "ctaUrl": "#signup",
+                "features": [
+                    {
+                        "text": "Fino a 5 membri del team",
+                        "included": true
+                    },
+                    {
+                        "text": "Progetti illimitati",
+                        "included": true
+                    },
+                    {
+                        "text": "Storage fino a 5GB",
+                        "included": true
+                    },
+                    {
+                        "text": "Board Kanban e Liste",
+                        "included": true
+                    },
+                    {
+                        "text": "App mobile",
+                        "included": true
+                    },
+                    {
+                        "text": "Timeline Gantt",
+                        "included": false
+                    },
+                    {
+                        "text": "Report avanzati",
+                        "included": false
+                    },
+                    {
+                        "text": "Automazioni",
+                        "included": false
+                    },
+                    {
+                        "text": "Supporto prioritario",
+                        "included": false
+                    }
+                ]
+            },
+            {
+                "icon": "briefcase",
+                "name": "Professional",
+                "description": "Per team in crescita che vogliono fare sul serio",
+                "priceMonthly": "12",
+                "priceYearly": "115",
+                "featured": true,
+                "featuredText": "Più Popolare",
+                "ctaText": "Prova Gratis 14 Giorni",
+                "ctaUrl": "#signup",
+                "features": [
+                    {
+                        "text": "Membri del team illimitati",
+                        "included": true
+                    },
+                    {
+                        "text": "Progetti illimitati",
+                        "included": true
+                    },
+                    {
+                        "text": "Storage fino a 100GB",
+                        "included": true
+                    },
+                    {
+                        "text": "Tutte le viste (Kanban, Gantt, Calendario)",
+                        "included": true
+                    },
+                    {
+                        "text": "Time tracking avanzato",
+                        "included": true
+                    },
+                    {
+                        "text": "Report e analytics",
+                        "included": true
+                    },
+                    {
+                        "text": "Automazioni illimitate",
+                        "included": true
+                    },
+                    {
+                        "text": "Integrazioni premium",
+                        "included": true
+                    },
+                    {
+                        "text": "Supporto via email",
+                        "included": true
+                    }
+                ]
+            },
+            {
+                "icon": "building",
+                "name": "Enterprise",
+                "description": "Soluzioni su misura per grandi organizzazioni",
+                "priceCustom": "Contattaci",
+                "ctaText": "Prenota una Demo",
+                "ctaUrl": "#contact",
+                "features": [
+                    {
+                        "text": "Tutto di Professional, più:",
+                        "included": true
+                    },
+                    {
+                        "text": "Storage illimitato",
+                        "included": true
+                    },
+                    {
+                        "text": "SSO e SAML",
+                        "included": true
+                    },
+                    {
+                        "text": "Gestione avanzata permessi",
+                        "included": true
+                    },
+                    {
+                        "text": "API illimitate",
+                        "included": true
+                    },
+                    {
+                        "text": "Onboarding dedicato",
+                        "included": true
+                    },
+                    {
+                        "text": "Account manager dedicato",
+                        "included": true
+                    },
+                    {
+                        "text": "Supporto telefonico 24/7",
+                        "included": true
+                    },
+                    {
+                        "text": "SLA garantito 99.9%",
+                        "included": true
+                    }
+                ]
+            }
+        ]
+    },
+    "testimonials": {
+        "title": "Amato da Team di Tutto il Mondo",
+        "subtitle": "Oltre 50.000 team si affidano a TaskFlow ogni giorno",
+        "items": [
+            {
+                "text": "TaskFlow ha trasformato completamente il modo in cui lavoriamo. Abbiamo aumentato la produttività del 45% in soli 3 mesi. Non potremmo più farne a meno!",
+                "name": "Marco Rossi",
+                "role": "CEO, TechStart SRL",
+                "avatar": "https://i.pravatar.cc/150?img=12",
+                "rating": 5
+            },
+            {
+                "text": "Finalmente uno strumento che il mio team ama davvero usare. L'interfaccia è intuitiva, le funzionalità sono potenti e il supporto clienti è eccezionale.",
+                "name": "Laura Bianchi",
+                "role": "Project Manager, Digital Agency",
+                "avatar": "https://i.pravatar.cc/150?img=45",
+                "rating": 5
+            },
+            {
+                "text": "Abbiamo provato almeno 10 tool di project management, ma solo TaskFlow ha soddisfatto tutte le nostre esigenze. Le automazioni ci fanno risparmiare ore ogni settimana.",
+                "name": "Giuseppe Verdi",
+                "role": "CTO, FinTech Solutions",
+                "avatar": "https://i.pravatar.cc/150?img=33",
+                "rating": 5
+            },
+            {
+                "text": "La possibilità di personalizzare completamente i workflow ha fatto la differenza per noi. TaskFlow si adatta perfettamente al nostro modo di lavorare, non il contrario.",
+                "name": "Chiara Ferrari",
+                "role": "Operations Director, E-commerce Co.",
+                "avatar": "https://i.pravatar.cc/150?img=47",
+                "rating": 5
+            },
+            {
+                "text": "Il miglior investimento che abbiamo fatto quest'anno. Il ROI è stato evidente fin dal primo mese. Consiglio TaskFlow a chiunque voglia lavorare meglio.",
+                "name": "Alessandro Russo",
+                "role": "Founder, Marketing Studio",
+                "avatar": "https://i.pravatar.cc/150?img=15",
+                "rating": 5
+            },
+            {
+                "text": "La migrazione da altri tool è stata semplicissima e il team di supporto ci ha seguito passo passo. Ora collaboriamo meglio e sprechiamo meno tempo in riunioni.",
+                "name": "Francesca Marino",
+                "role": "Head of Product, SaaS Startup",
+                "avatar": "https://i.pravatar.cc/150?img=48",
+                "rating": 5
+            }
+        ]
+    },
+    "faq": {
+        "title": "Domande Frequenti",
+        "subtitle": "Tutto quello che devi sapere su TaskFlow",
+        "items": [
+            {
+                "question": "È davvero gratis? Ci sono costi nascosti?",
+                "answer": "Sì, il piano Free è completamente gratuito per sempre, senza costi nascosti. Puoi usarlo con fino a 5 membri del team e avrai accesso alle funzionalità base. Non è richiesta nessuna carta di credito per iniziare."
+            },
+            {
+                "question": "Posso cambiare piano in qualsiasi momento?",
+                "answer": "Assolutamente sì! Puoi fare upgrade o downgrade del tuo piano in qualsiasi momento. Se passi a un piano superiore, pagherai solo la differenza proporzionale. Se fai downgrade, il credito rimanente verrà applicato ai prossimi pagamenti."
+            },
+            {
+                "question": "I miei dati sono al sicuro?",
+                "answer": "La sicurezza è la nostra priorità assoluta. Tutti i dati sono crittografati end-to-end, abbiamo conformità GDPR completa, autenticazione a due fattori, backup giornalieri e server in Europa. Inoltre offriamo SSO per i piani Enterprise."
+            },
+            {
+                "question": "Posso importare dati da altri tool?",
+                "answer": "Sì! Offriamo importatori automatici per i principali strumenti di project management come Trello, Asana, Monday, Jira e molti altri. Il nostro team di supporto ti aiuterà gratuitamente nella migrazione."
+            },
+            {
+                "question": "Quali integrazioni supportate?",
+                "answer": "TaskFlow si integra con oltre 1000+ strumenti tramite connessioni native e Zapier/Make. Tra i principali: Slack, Microsoft Teams, Google Workspace, GitHub, GitLab, Figma, Google Drive, Dropbox, Calendly e molti altri."
+            },
+            {
+                "question": "C'è un limite al numero di progetti?",
+                "answer": "No, anche nel piano Free puoi creare progetti illimitati. L'unica limitazione è il numero di membri del team (5 nel Free, illimitati nei piani a pagamento) e lo spazio di storage disponibile."
+            },
+            {
+                "question": "Offrite supporto in italiano?",
+                "answer": "Sì! TaskFlow è completamente tradotto in italiano e il nostro team di supporto parla italiano. Offriamo supporto via email per tutti i piani e supporto telefonico 24/7 per i clienti Enterprise."
+            },
+            {
+                "question": "Cosa succede se supero il limite di storage?",
+                "answer": "Riceverai una notifica quando ti avvicini al limite. A quel punto puoi fare upgrade del piano o eliminare file vecchi. Non perderai mai l'accesso ai tuoi dati, ma non potrai caricare nuovi file fino a liberare spazio o fare upgrade."
+            },
+            {
+                "question": "Posso usare TaskFlow offline?",
+                "answer": "Le nostre app mobile supportano la modalità offline. Puoi visualizzare e modificare task anche senza connessione, e tutte le modifiche verranno sincronizzate automaticamente quando torni online."
+            },
+            {
+                "question": "Offrite sconti per no-profit o educazione?",
+                "answer": "Sì! Offriamo sconti fino al 50% per organizzazioni no-profit, scuole e università. Contattaci via email con la documentazione della tua organizzazione per richiedere lo sconto."
+            }
+        ]
+    },
+    "finalCta": {
+        "title": "Pronto a Trasformare il Modo in Cui Lavori?",
+        "subtitle": "Unisciti a oltre 50.000 team che hanno già scelto TaskFlow per aumentare la loro produttività",
+        "ctaText": "Inizia Gratis per 14 Giorni",
+        "note": "Nessuna carta di credito richiesta • Cancella in qualsiasi momento"
+    },
+    "cta": {
+        "loginUrl": "/login"
+    },
+    "social": {
+        "twitter": "https://twitter.com/taskflow",
+        "facebook": "https://facebook.com/taskflow",
+        "instagram": "https://instagram.com/taskflow",
+        "linkedin": "https://linkedin.com/company/taskflow",
+        "github": "https://github.com/taskflow"
+    },
+    "footer": {
+        "links": [
+            {
+                "title": "Prodotto",
+                "items": [
+                    {
+                        "text": "Funzionalità",
+                        "url": "#features"
+                    },
+                    {
+                        "text": "Prezzi",
+                        "url": "#pricing"
+                    },
+                    {
+                        "text": "Integrazioni",
+                        "url": "/integrations"
+                    },
+                    {
+                        "text": "API",
+                        "url": "/api"
+                    },
+                    {
+                        "text": "Roadmap",
+                        "url": "/roadmap"
+                    }
+                ]
+            },
+            {
+                "title": "Risorse",
+                "items": [
+                    {
+                        "text": "Blog",
+                        "url": "/blog"
+                    },
+                    {
+                        "text": "Guide",
+                        "url": "/guides"
+                    },
+                    {
+                        "text": "Webinar",
+                        "url": "/webinar"
+                    },
+                    {
+                        "text": "Community",
+                        "url": "/community"
+                    },
+                    {
+                        "text": "Centro Assistenza",
+                        "url": "/help"
+                    }
+                ]
+            },
+            {
+                "title": "Azienda",
+                "items": [
+                    {
+                        "text": "Chi Siamo",
+                        "url": "/about"
+                    },
+                    {
+                        "text": "Carriere",
+                        "url": "/careers"
+                    },
+                    {
+                        "text": "Contatti",
+                        "url": "/contact"
+                    },
+                    {
+                        "text": "Stampa",
+                        "url": "/press"
+                    },
+                    {
+                        "text": "Partner",
+                        "url": "/partners"
+                    }
+                ]
+            }
+        ]
+    },
+    "cookies": {
+        "bannerText": "Utilizziamo cookie per migliorare la tua esperienza e analizzare il traffico del sito. Continuando la navigazione accetti l'uso dei cookie."
+    }
+}

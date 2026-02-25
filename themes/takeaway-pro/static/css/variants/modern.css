@@ -1,0 +1,97 @@
+/* Takeaway Pro Theme - Modern Variant */
+/* Orange and dark modern colors */
+
+:root {
+    /* Primary & Secondary Colors */
+    --primary-color: #ff6b35;
+    --primary-hover: #e55a2b;
+    --secondary-color: #2d3748;
+    --accent-color: #ffd700;
+    
+    /* Status Colors */
+    --success-color: #48bb78;
+    --warning-color: #ed8936;
+    --error-color: #f56565;
+    
+    /* Background Colors */
+    --bg-color: #ffffff;
+    --bg-secondary: #f7fafc;
+    --bg-dark: #1a202c;
+    
+    /* Background Gradients */
+    --hero-gradient: linear-gradient(135deg, rgba(255, 107, 53, 0.9) 0%, rgba(229, 90, 43, 0.8) 100%);
+    --card-gradient: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
+}
+
+.theme-modern .hero {
+    background: var(--hero-gradient), 
+                linear-gradient(45deg, transparent 25%, rgba(255, 215, 0, 0.1) 25%, rgba(255, 215, 0, 0.1) 50%, transparent 50%),
+                var(--bg-secondary);
+    background-size: 100% 100%, 30px 30px, 100% 100%;
+}
+
+.theme-modern .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    border: none;
+}
+
+.theme-modern .btn-primary:hover {
+    box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    transform: translateY(-3px);
+}
+
+.theme-modern .menu-item {
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.theme-modern .menu-item:hover {
+    border-color: var(--primary-color);
+    background: var(--card-gradient);
+}
+
+.theme-modern .delivery-service {
+    background: var(--card-gradient);
+    border: 1px solid rgba(255, 107, 53, 0.1);
+}
+
+.theme-modern .delivery-service:hover {
+    border-color: var(--primary-color);
+    background: var(--bg-color);
+}
+
+.theme-modern .popular-badge {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #ffed4e 100%);
+    color: var(--secondary-color);
+}
+
+.theme-modern .stat-icon {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.2);
+}
+
+.theme-modern .nav-link:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(229, 90, 43, 0.05) 100%);
+}
+
+/* Modern geometric decorations */
+.theme-modern .decoration-circle {
+    background: linear-gradient(45deg, var(--accent-color) 0%, transparent 70%);
+    transform: rotate(45deg);
+}
+
+.theme-modern .hero-badge {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, #1a202c 100%);
+    box-shadow: 0 4px 15px rgba(45, 55, 72, 0.3);
+}
+
+.theme-modern .footer {
+    background: linear-gradient(135deg, var(--bg-dark) 0%, var(--secondary-color) 100%);
+}
+
+/* Modern card shadows and effects */
+.theme-modern .info-card:hover,
+.theme-modern .order-summary,
+.theme-modern .cart-widget {
+    box-shadow: 0 10px 40px rgba(255, 107, 53, 0.1);
+}
